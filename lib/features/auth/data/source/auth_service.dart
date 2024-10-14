@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:food_hub/features/auth/data/model/reset_model.dart';
 import 'package:food_hub/features/auth/data/model/sigin_model.dart';
 import 'package:food_hub/features/auth/data/model/signup_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,6 +10,7 @@ abstract class AuthService {
   Future<Either<String, String>> signinWithGoogle();
   Future<Either<String, String>> signin(SigninModel signinModel);
   Future<Either<String, String>> signup(SignupModel signupModel);
+  Future<Either<String, String>> resetPassword(ResetModel resetModel);
 }
 
 class AuthServiceImpl extends AuthService {
@@ -109,6 +111,17 @@ class AuthServiceImpl extends AuthService {
       }
 
       return Left(message);
+    }
+  }
+
+  @override
+  Future<Either<String, String>> resetPassword(ResetModel resetModel) async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: resetModel.email);
+      return Right('Rest link has been sent to your email');
+    } catch (e) {
+      return Left('Some Error Occured');
     }
   }
 }

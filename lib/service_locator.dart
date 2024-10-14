@@ -1,4 +1,5 @@
 import 'package:food_hub/features/auth/data/source/auth_service.dart';
+import 'package:food_hub/features/auth/domain/usecase/reset_usecase.dart';
 import 'package:food_hub/features/auth/domain/usecase/sigin_usecase.dart';
 import 'package:food_hub/features/auth/domain/usecase/signin_with_google.dart';
 import 'package:food_hub/features/auth/domain/usecase/singup_usecase.dart';
@@ -23,5 +24,9 @@ Future<void> initializedDependency() async {
 
   sl.registerSingleton<SiginUsecase>(
     SiginUsecase(),
+  );
+
+  sl.registerSingleton<ResetUsecase>(
+    ResetUsecase(),
   );
 }

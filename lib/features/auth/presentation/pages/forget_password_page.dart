@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:food_hub/features/auth/data/model/reset_model.dart';
+import 'package:food_hub/features/auth/domain/usecase/reset_usecase.dart';
+import 'package:food_hub/service_locator.dart';
 import 'package:go_router/go_router.dart';
 
 class ForgetPasswordPage extends StatefulWidget {
@@ -67,8 +71,44 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
             // Reset Password Button
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  // Implement reset password logic here
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        const Center(child: CircularProgressIndicator()),
+                  );
+                  final result = await sl<ResetUsecase>()
+                      .call(ResetModel(email: _emailController.text));
+
+                  result.fold((ifLeft) {
+                    Navigator.pop(context);
+                    showToast(
+                      ifLeft,
+                      backgroundColor: Colors.red,
+                      context: context,
+                      animation: StyledToastAnimation.slideToTop,
+                      reverseAnimation: StyledToastAnimation.fade,
+                      position: StyledToastPosition.top,
+                      animDuration: Duration(seconds: 1),
+                      duration: Duration(seconds: 4),
+                      curve: Curves.elasticOut,
+                      reverseCurve: Curves.linear,
+                    );
+                  }, (ifRight) {
+                    Navigator.pop(context);
+                    showToast(
+                      ifRight,
+                      backgroundColor: Colors.red,
+                      context: context,
+                      animation: StyledToastAnimation.slideToTop,
+                      reverseAnimation: StyledToastAnimation.fade,
+                      position: StyledToastPosition.top,
+                      animDuration: Duration(seconds: 1),
+                      duration: Duration(seconds: 4),
+                      curve: Curves.elasticOut,
+                      reverseCurve: Curves.linear,
+                    );
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.primary,
