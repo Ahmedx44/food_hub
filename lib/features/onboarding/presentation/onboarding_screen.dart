@@ -3,6 +3,7 @@ import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_hub/core/assets/app_image.dart';
 import 'package:food_hub/core/assets/app_vector.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -23,13 +24,16 @@ class OnboardingScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.primary,
         ),
         finishButtonText: 'Register',
+        onFinish: () {
+          context.go('/signup');
+        },
         pageBodies: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               children: <Widget>[
                 SvgPicture.asset(AppVector.delivery),
-                Text(
+                const Text(
                   'Fast and Reliable Delivery',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),

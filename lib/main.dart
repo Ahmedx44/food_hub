@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_hub/core/theme/theme.dart';
+import 'package:food_hub/features/auth/presentation/pages/signup.dart';
 import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,6 +14,12 @@ final GoRouter _router = GoRouter(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
         return const OnboardingScreen();
+      },
+    ),
+    GoRoute(
+      path: '/signup',
+      builder: (BuildContext context, GoRouterState state) {
+        return SignupPage();
       },
     ),
   ],
