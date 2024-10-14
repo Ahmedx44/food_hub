@@ -25,7 +25,7 @@ class OnboardingScreen extends StatelessWidget {
         ),
         finishButtonText: 'Register',
         onFinish: () {
-          context.go('/signup');
+          context.go('/login');
         },
         pageBodies: [
           Container(
