@@ -192,11 +192,21 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(height: 50, AppImage.apple),
+                  Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).colorScheme.secondary),
+                      padding: const EdgeInsets.all(5),
+                      child: Image.asset(height: 50, AppImage.apple)),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  Image.asset(height: 50, AppImage.google),
+                  Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).colorScheme.secondary),
+                      child: Image.asset(height: 50, AppImage.google)),
                 ],
               ),
               SizedBox(

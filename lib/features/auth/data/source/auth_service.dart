@@ -121,6 +121,7 @@ class AuthServiceImpl extends AuthService {
           .sendPasswordResetEmail(email: resetModel.email);
       return Right('Rest link has been sent to your email');
     } catch (e) {
+      print(e);
       return Left('Some Error Occured');
     }
   }

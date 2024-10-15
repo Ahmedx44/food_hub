@@ -98,7 +98,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     Navigator.pop(context);
                     showToast(
                       ifRight,
-                      backgroundColor: Colors.red,
+                      backgroundColor: Color.fromARGB(255, 53, 226, 0),
                       context: context,
                       animation: StyledToastAnimation.slideToTop,
                       reverseAnimation: StyledToastAnimation.fade,
@@ -108,6 +108,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       curve: Curves.elasticOut,
                       reverseCurve: Curves.linear,
                     );
+                    context.go('/login');
                   });
                 },
                 style: ElevatedButton.styleFrom(

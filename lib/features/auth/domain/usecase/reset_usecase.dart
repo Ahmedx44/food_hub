@@ -5,6 +5,6 @@ import 'package:food_hub/service_locator.dart';
 
 class ResetUsecase {
   Future<Either<String, String>> call(ResetModel resetModel) async {
-    return await sl<AuthServiceImpl>().resetPassword(resetModel);
+    return await sl<AuthService>().resetPassword(resetModel);
   }
 }

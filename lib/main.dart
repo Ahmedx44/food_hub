@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub/core/theme/theme.dart';
+import 'package:food_hub/features/auth/presentation/pages/auth_gate.dart';
 import 'package:food_hub/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:food_hub/features/auth/presentation/pages/login.dart';
 import 'package:food_hub/features/auth/presentation/pages/signup.dart';
@@ -21,6 +22,12 @@ final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const AuthGate();
+      },
+    ),
+    GoRoute(
+      path: '/onboarding',
       builder: (BuildContext context, GoRouterState state) {
         return const OnboardingScreen();
       },
