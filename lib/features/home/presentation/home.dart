@@ -16,20 +16,20 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int pageIndex = 0;
-  Widget page = HomeScreen();
+  Widget page = const HomeScreen();
 
   @override
   Widget build(BuildContext context) {
     if (pageIndex == 0) {
-      page = HomeScreen();
+      page = const HomeScreen();
     } else if (pageIndex == 1) {
-      page = SearchScreen();
+      page = const SearchScreen();
     } else if (pageIndex == 2) {
-      page = CartScreen();
+      page = const CartScreen();
     } else if (pageIndex == 3) {
-      page = OrderScreen();
+      page = const OrderScreen();
     } else if (pageIndex == 4) {
-      page = ProfileScreen();
+      page = const ProfileScreen();
     }
     return Scaffold(
         bottomNavigationBar: BottomBarFloating(

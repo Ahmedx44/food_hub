@@ -89,8 +89,8 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       animation: StyledToastAnimation.slideToTop,
                       reverseAnimation: StyledToastAnimation.fade,
                       position: StyledToastPosition.top,
-                      animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds: 4),
+                      animDuration: const Duration(seconds: 1),
+                      duration: const Duration(seconds: 4),
                       curve: Curves.elasticOut,
                       reverseCurve: Curves.linear,
                     );
@@ -98,13 +98,13 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     Navigator.pop(context);
                     showToast(
                       ifRight,
-                      backgroundColor: Color.fromARGB(255, 53, 226, 0),
+                      backgroundColor: const Color.fromARGB(255, 53, 226, 0),
                       context: context,
                       animation: StyledToastAnimation.slideToTop,
                       reverseAnimation: StyledToastAnimation.fade,
                       position: StyledToastPosition.top,
-                      animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds: 4),
+                      animDuration: const Duration(seconds: 1),
+                      duration: const Duration(seconds: 4),
                       curve: Curves.elasticOut,
                       reverseCurve: Curves.linear,
                     );

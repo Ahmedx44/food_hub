@@ -3,6 +3,9 @@ import 'package:food_hub/features/auth/domain/usecase/reset_usecase.dart';
 import 'package:food_hub/features/auth/domain/usecase/sigin_usecase.dart';
 import 'package:food_hub/features/auth/domain/usecase/signin_with_google.dart';
 import 'package:food_hub/features/auth/domain/usecase/singup_usecase.dart';
+import 'package:food_hub/features/home/data/repository/location_repositoy_impl.dart';
+import 'package:food_hub/features/home/data/source/location_service.dart';
+import 'package:food_hub/features/home/domain/usecase/get_location_usecase.dart';
 
 import 'package:get_it/get_it.dart';
 
@@ -12,6 +15,9 @@ Future<void> initializedDependency() async {
   //Service
   sl.registerSingleton<AuthService>(
     AuthServiceImpl(),
+  );
+  sl.registerSingleton<LocationService>(
+    LocationServiceImpl(),
   );
 
   //UseCase
@@ -28,5 +34,14 @@ Future<void> initializedDependency() async {
 
   sl.registerSingleton<ResetUsecase>(
     ResetUsecase(),
+  );
+
+  sl.registerSingleton<GetLocationUsecase>(
+    GetLocationUsecase(),
+  );
+
+  //Implementation
+  sl.registerSingleton<LocationRepositoyImpl>(
+    LocationRepositoyImpl(),
   );
 }

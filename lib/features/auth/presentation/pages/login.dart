@@ -137,8 +137,8 @@ class _LoginPageState extends State<LoginPage> {
                         animation: StyledToastAnimation.slideToTop,
                         reverseAnimation: StyledToastAnimation.fade,
                         position: StyledToastPosition.top,
-                        animDuration: Duration(seconds: 1),
-                        duration: Duration(seconds: 4),
+                        animDuration: const Duration(seconds: 1),
+                        duration: const Duration(seconds: 4),
                         curve: Curves.elasticOut,
                         reverseCurve: Curves.linear,
                       );
@@ -152,8 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                         animation: StyledToastAnimation.slideToTop,
                         reverseAnimation: StyledToastAnimation.fade,
                         position: StyledToastPosition.top,
-                        animDuration: Duration(seconds: 1),
-                        duration: Duration(seconds: 4),
+                        animDuration: const Duration(seconds: 1),
+                        duration: const Duration(seconds: 4),
                         curve: Curves.elasticOut,
                         reverseCurve: Curves.linear,
                       );

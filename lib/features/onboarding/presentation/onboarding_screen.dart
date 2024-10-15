@@ -16,8 +16,8 @@ class OnboardingScreen extends StatelessWidget {
         totalPage: 2,
         headerBackgroundColor: Colors.white,
         background: [
-          SvgPicture.asset('assets/vector/delive.png'),
-          SvgPicture.asset('assets/vector/enjoying.png'),
+          SvgPicture.asset('assets/vector/delive.svg'),
+          SvgPicture.asset('assets/vector/enjoying.svg'),
         ],
         speed: 1.8,
         finishButtonStyle: FinishButtonStyle(

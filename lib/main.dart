@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initializedDependency();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 final GoRouter _router = GoRouter(

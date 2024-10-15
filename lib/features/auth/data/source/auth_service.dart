@@ -25,7 +25,7 @@ class AuthServiceImpl extends AuthService {
           await googleSignIn.signIn();
 
       if (googleSignInAccount == null) {
-        return Left('Google sign-in was canceled');
+        return const Left('Google sign-in was canceled');
       }
 
       final GoogleSignInAuthentication googleSignInAuthentication =
@@ -119,10 +119,9 @@ class AuthServiceImpl extends AuthService {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: resetModel.email);
-      return Right('Rest link has been sent to your email');
+      return const Right('Rest link has been sent to your email');
     } catch (e) {
-      print(e);
-      return Left('Some Error Occured');
+      return const Left('Some Error Occured');
     }
   }
 }

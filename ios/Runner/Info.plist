@@ -4,6 +4,12 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to provide better services.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to provide better services.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your location to provide better services.</string>
 	<key>CFBundleDisplayName</key>
 	<string>Food Hub</string>
 	<key>CFBundleExecutable</key>
