@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:food_hub/features/home/data/repository/location_repositoy_impl.dart';
 import 'package:food_hub/features/home/domain/usecase/get_location_usecase.dart';
 import 'package:food_hub/service_locator.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,17 +14,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Position position;
-  String message = '';
+  String? location = '';
 
-  checklocation() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    final String? action = prefs.getString('location');
-    if (action!.isEmpty) {
-      final result = await sl<GetLocationUsecase>().call();
-      result.fold((ifLeft) {
+  Future<void> checkLocation() async {
+    final result = await sl<GetLocationUsecase>().call();
+    result.fold(
+      (failureMessage) {
         showToast(
-          ifLeft,
+          failureMessage,
           backgroundColor: Colors.red,
           context: context,
           animation: StyledToastAnimation.slideToTop,
@@ -36,28 +32,42 @@ class _HomeScreenState extends State<HomeScreen> {
           curve: Curves.elasticOut,
           reverseCurve: Curves.linear,
         );
-      }, (ifRight) {
+      },
+      (currentPosition) async {
+        position = currentPosition;
+
+        // Get location information from coordinates
+        List<Placemark> placemarks = await placemarkFromCoordinates(
+          position.latitude,
+          position.longitude,
+        );
+
+        // Construct a location string
+        String newLocation =
+            '${placemarks[0].country}, ${placemarks[0].administrativeArea}, ${placemarks[0].locality}';
+
         setState(() {
-          position = ifRight;
+          location = newLocation;
         });
-      });
-    } else {
-      return;
-    }
+      },
+    );
   }
 
   @override
   void initState() {
     super.initState();
-    checklocation();
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Home'),
+    checkLocation();
+    return Scaffold(
+        body: SafeArea(
+      child: Column(
+        children: [
+          Text(location.toString()),
+        ],
       ),
-    );
+    ));
   }
 }
