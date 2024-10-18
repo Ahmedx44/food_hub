@@ -13,7 +13,10 @@ class ItemServiceImpl extends ItemService {
   Future<Either<String, Stream<QuerySnapshot<Map<String, dynamic>>>>>
       getPopularItems() async {
     try {
-      final result = _firebaseFirestore.collection('foods').snapshots();
+      final result = _firebaseFirestore
+          .collection('foods')
+          .where('rating', isGreaterThan: 4.6)
+          .snapshots();
 
       return Right(result);
     } catch (error) {

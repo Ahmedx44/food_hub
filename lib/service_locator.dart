@@ -6,6 +6,7 @@ import 'package:food_hub/features/auth/domain/usecase/singup_usecase.dart';
 import 'package:food_hub/features/home/data/repository/location_repositoy_impl.dart';
 import 'package:food_hub/features/home/data/source/item_Service.dart';
 import 'package:food_hub/features/home/data/source/location_service.dart';
+import 'package:food_hub/features/home/domain/usecase/get_item_usecase.dart';
 import 'package:food_hub/features/home/domain/usecase/get_location_usecase.dart';
 
 import 'package:get_it/get_it.dart';
@@ -42,6 +43,9 @@ Future<void> initializedDependency() async {
 
   sl.registerSingleton<GetLocationUsecase>(
     GetLocationUsecase(),
+  );
+  sl.registerSingleton<GetItemUsecase>(
+    GetItemUsecase(),
   );
 
   //Implementation
