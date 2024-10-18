@@ -4,8 +4,8 @@ final ThemeData lightMode = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   colorScheme: ColorScheme.light(
     primary: const Color.fromARGB(255, 255, 72, 0),
-    onPrimaryContainer: Color.fromARGB(255, 252, 178, 148),
-    secondary: Colors.grey[400]!,
+    onPrimaryContainer: Color.fromARGB(255, 255, 232, 222),
+    secondary: Colors.grey[200]!,
     onSecondaryContainer: Color.fromARGB(255, 240, 240, 240),
     surface: Colors.white,
     onPrimary: Colors.black,
@@ -25,10 +25,10 @@ final ThemeData darkMode = ThemeData(
     primary:
         const Color.fromARGB(255, 255, 72, 0), // Keep primary color the same
     onPrimaryContainer:
-        Color.fromARGB(255, 252, 178, 148), // Keep this color as is
+        const Color.fromARGB(255, 252, 178, 148), // Keep this color as is
     secondary: Colors.grey[800]!, // Darker shade for secondary
-    onSecondaryContainer:
-        Color.fromARGB(255, 40, 40, 40), // Darker shade for secondary container
+    onSecondaryContainer: const Color.fromARGB(
+        255, 40, 40, 40), // Darker shade for secondary container
     surface: Colors.grey[900]!, // Dark surface color
     onPrimary: Colors.white, // Change onPrimary to white for contrast
     onSecondary: Colors.white, // Change onSecondary to white for contrast

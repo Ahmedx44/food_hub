@@ -51,6 +51,7 @@ dependencies:
   geocoding: ^3.0.0
   carousel_slider: ^5.0.0
   smooth_page_indicator: 
+  extended_image: ^9.0.3
 
 dev_dependencies:
   flutter_test:
