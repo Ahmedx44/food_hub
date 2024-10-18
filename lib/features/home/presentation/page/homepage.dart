@@ -15,6 +15,7 @@ import 'package:food_hub/features/home/presentation/widegt/mini_card.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -234,9 +235,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       crossAxisCount: 2),
                               itemBuilder: (context, index) {
                                 final item = snapshot.data!.docs[index];
-                                // ignore: avoid_unnecessary_containers
-                                return Items(
-                                  item: item,
+
+                                return GestureDetector(
+                                  onTap: () {
+                                    context.push('/itemdetail', extra: item);
+                                  },
+                                  child: Items(
+                                    item: item,
+                                  ),
                                 );
                               },
                             );

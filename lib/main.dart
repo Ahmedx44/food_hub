@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub/core/theme/theme.dart';
@@ -6,6 +7,7 @@ import 'package:food_hub/features/auth/presentation/pages/forget_password_page.d
 import 'package:food_hub/features/auth/presentation/pages/login.dart';
 import 'package:food_hub/features/auth/presentation/pages/signup.dart';
 import 'package:food_hub/features/home/presentation/home.dart';
+import 'package:food_hub/features/home/presentation/page/detail_page.dart';
 import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:food_hub/firebase_options.dart';
 import 'package:food_hub/service_locator.dart';
@@ -54,6 +56,13 @@ final GoRouter _router = GoRouter(
       path: '/home',
       builder: (BuildContext context, GoRouterState state) {
         return const Home();
+      },
+    ),
+    GoRoute(
+      path: '/itemdetail',
+      builder: (BuildContext context, GoRouterState state) {
+        final item = state.extra as QueryDocumentSnapshot<Map<String, dynamic>>;
+        return ItemDetail(item: item);
       },
     ),
   ],

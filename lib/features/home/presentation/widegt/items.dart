@@ -22,10 +22,13 @@ class Items extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: ExtendedImage.network(
-                height: 100,
-                cache: true,
-                item['image_url'],
+              child: Hero(
+                tag: item['name'],
+                child: ExtendedImage.network(
+                  height: 100,
+                  cache: true,
+                  item['image_url'],
+                ),
               ),
             ),
             Text(
