@@ -2,7 +2,7 @@ import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub/features/cart/presentation/cart.dart';
-import 'package:food_hub/features/home/presentation/homepage.dart';
+import 'package:food_hub/features/home/presentation/page/homepage.dart';
 import 'package:food_hub/features/order/presentation/order.dart';
 import 'package:food_hub/features/profile/presentation/profile.dart';
 import 'package:food_hub/features/search/presentation/search.dart';
