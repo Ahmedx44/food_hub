@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "563477126009",
+    "firebase_url": "https://food-hub-db057-default-rtdb.firebaseio.com",
     "project_id": "food-hub-db057",
     "storage_bucket": "food-hub-db057.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.food_hub"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "563477126009-bc65k4ep58oomnbvg9girsd0dkuh6qul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.food_hub",
+            "certificate_hash": "ea52c4be73da2bdb73c97c5d98a046d16111abad"
+          }
+        },
+        {
+          "client_id": "563477126009-pd8e6r8huaijh0gp2eckh7pq0knbvov6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAmAPhQednqJXfAY4uGNU83QsoEMOJuMPQ"
@@ -20,7 +34,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563477126009-pd8e6r8huaijh0gp2eckh7pq0knbvov6.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "563477126009-2gjlubie46ojkrhqf7ihc54dggoceuds.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodHub"
+              }
+            }
+          ]
         }
       }
     }

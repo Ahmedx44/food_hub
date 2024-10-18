@@ -10,6 +10,7 @@ import 'package:food_hub/features/home/presentation/bloc/home_cubit.dart';
 import 'package:food_hub/features/home/presentation/bloc/home_state.dart';
 import 'package:food_hub/features/home/presentation/widegt/custom_Card.dart';
 import 'package:food_hub/features/home/presentation/widegt/item_skeleton.dart';
+import 'package:food_hub/features/home/presentation/widegt/items.dart';
 import 'package:food_hub/features/home/presentation/widegt/mini_card.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:geocoding/geocoding.dart';
@@ -228,12 +229,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: snapshot.data!.docs.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
+                                      mainAxisSpacing: 5,
+                                      crossAxisSpacing: 5,
                                       crossAxisCount: 2),
                               itemBuilder: (context, index) {
                                 final item = snapshot.data!.docs[index];
                                 // ignore: avoid_unnecessary_containers
-                                return Container(
-                                  child: Text(item['name']),
+                                return Items(
+                                  item: item,
                                 );
                               },
                             );
