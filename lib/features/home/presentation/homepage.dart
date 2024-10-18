@@ -4,9 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:food_hub/core/assets/app_image.dart';
 import 'package:food_hub/features/home/domain/usecase/get_location_usecase.dart';
+import 'package:food_hub/features/home/presentation/bloc/home_cubit.dart';
 import 'package:food_hub/features/home/presentation/widegt/custom_Card.dart';
 import 'package:food_hub/features/home/presentation/widegt/mini_card.dart';
 import 'package:food_hub/service_locator.dart';
@@ -488,9 +490,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(
                     child: IconButton(
-                      onPressed: () {
-                        addFoodDataToFirestore();
-                      },
+                      onPressed: () {},
                       icon: Icon(Icons.notifications_none_outlined),
                     ),
                   ),
@@ -578,6 +578,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     name: 'Pasta',
                   )
                 ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.05),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Popular',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                  Text('See All',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: Theme.of(context).colorScheme.primary))
+                ],
+              ),
+            ),
+            BlocProvider(
+              create: (context) => HomeCubit(),
+              child: Column(
+                children: [],
               ),
             )
           ],

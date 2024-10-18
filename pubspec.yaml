@@ -52,6 +52,8 @@ dependencies:
   carousel_slider: ^5.0.0
   smooth_page_indicator: 
   extended_image: ^9.0.3
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
 
 dev_dependencies:
   flutter_test:
