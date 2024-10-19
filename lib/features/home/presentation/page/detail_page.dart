@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:food_hub/features/home/data/model/cart_model.dart';
-import 'package:food_hub/features/home/data/repository/item_repository_impl.dart';
 import 'package:food_hub/features/home/domain/usecase/add_to_cart_usecase.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:go_router/go_router.dart';

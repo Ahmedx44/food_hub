@@ -3,6 +3,10 @@ import 'package:food_hub/features/auth/domain/usecase/reset_usecase.dart';
 import 'package:food_hub/features/auth/domain/usecase/sigin_usecase.dart';
 import 'package:food_hub/features/auth/domain/usecase/signin_with_google.dart';
 import 'package:food_hub/features/auth/domain/usecase/singup_usecase.dart';
+
+import 'package:food_hub/features/cart/data/repository/cart_repository_impl.dart';
+import 'package:food_hub/features/cart/data/source/cart_service.dart';
+import 'package:food_hub/features/cart/domain/usecase/get_all_cart.dart';
 import 'package:food_hub/features/home/data/repository/item_repository_impl.dart';
 import 'package:food_hub/features/home/data/repository/location_repositoy_impl.dart';
 import 'package:food_hub/features/home/data/source/item_Service.dart';
@@ -10,7 +14,6 @@ import 'package:food_hub/features/home/data/source/location_service.dart';
 import 'package:food_hub/features/home/domain/usecase/add_to_cart_usecase.dart';
 import 'package:food_hub/features/home/domain/usecase/get_item_usecase.dart';
 import 'package:food_hub/features/home/domain/usecase/get_location_usecase.dart';
-
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -26,6 +29,7 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<ItemService>(
     ItemServiceImpl(),
   );
+  sl.registerSingleton<CartService>(CartServiceImpl());
 
   //UseCase
   sl.registerSingleton<SigninWithGoogle>(
@@ -52,6 +56,9 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<AddToCartUsecase>(
     AddToCartUsecase(),
   );
+  sl.registerSingleton<GetAllCart>(
+    GetAllCart(),
+  );
 
   //Implementation
   sl.registerSingleton<LocationRepositoyImpl>(
@@ -60,5 +67,8 @@ Future<void> initializedDependency() async {
 
   sl.registerSingleton<ItemRepositoryImpl>(
     ItemRepositoryImpl(),
+  );
+  sl.registerSingleton<CartRepositoryImpl>(
+    CartRepositoryImpl(),
   );
 }

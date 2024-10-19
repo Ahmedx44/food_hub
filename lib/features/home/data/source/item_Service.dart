@@ -32,6 +32,7 @@ class ItemServiceImpl extends ItemService {
   Future<Either<String, String>> addtocart(CartModel cartModel) async {
     final box = Hive.box<CartItem>('cart_item');
     try {
+      print(cartModel.name);
       box.add(CartItem(
           category: cartModel.category,
           description: cartModel.description,

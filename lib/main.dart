@@ -21,6 +21,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initializedDependency();
   await Hive.initFlutter();
+  Hive.registerAdapter(CartItemAdapter());
   await Hive.openBox<CartItem>('cart_item');
 
   runApp(const MyApp());
