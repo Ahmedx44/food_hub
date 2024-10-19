@@ -20,6 +20,7 @@ class ItemDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -31,6 +32,16 @@ class ItemDetail extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15),
                           color: Theme.of(context).colorScheme.secondary),
                       child: const Icon(Icons.arrow_back_ios_new),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Theme.of(context).colorScheme.secondary),
+                      child: const Icon(Icons.favorite_border),
                     ),
                   )
                 ],
@@ -89,7 +100,10 @@ class ItemDetail extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 16),
                   children: [
-                    const TextSpan(text: 'Price: '),
+                    TextSpan(
+                        text: 'Price: ',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSecondary)),
                     TextSpan(
                       text: item['price'].toString(),
                       style: TextStyle(
@@ -97,6 +111,23 @@ class ItemDetail extends StatelessWidget {
                           color: Theme.of(context).colorScheme.primary),
                     ),
                   ],
+                ),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
+              ),
+              Text(item['description']),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.1,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    vertical: MediaQuery.of(context).size.height * 0.02),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).colorScheme.primary),
+                child: Center(
+                  child: Text('Add to Cart'),
                 ),
               )
             ],

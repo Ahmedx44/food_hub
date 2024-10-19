@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.1),
+                      horizontal: MediaQuery.of(context).size.width * 0.02),
                   child: Row(
                     children: [
                       Expanded(
@@ -129,9 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.06),
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Theme.of(context).colorScheme.primary),
@@ -147,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _carousel(),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.05),
+                      horizontal: MediaQuery.of(context).size.width * 0.01),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
