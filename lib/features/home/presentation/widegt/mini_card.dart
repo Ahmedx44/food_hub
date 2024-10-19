@@ -18,7 +18,7 @@ class MiniCards extends StatelessWidget {
       width: 150,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.secondary),
+          color: Theme.of(context).colorScheme.onSecondaryContainer),
       child: Column(
         children: [
           ExtendedImage.network(height: 139, cache: true, image),
