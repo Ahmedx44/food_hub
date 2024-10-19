@@ -24,7 +24,7 @@ class MiniCards extends StatelessWidget {
           ExtendedImage.network(height: 139, cache: true, image),
           Text(
             name,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           )
         ],
       ),

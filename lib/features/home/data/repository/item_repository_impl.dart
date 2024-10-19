@@ -12,6 +12,7 @@ class ItemRepositoryImpl extends ItemRepository {
     return sl<ItemService>().getPopularItems();
   }
 
+  @override
   Future<Either<String, String>> addtocart(CartModel cartModel) {
     return sl<ItemService>().addtocart(cartModel);
   }

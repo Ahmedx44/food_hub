@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerSkeleton extends StatelessWidget {
+  const ShimmerSkeleton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +37,14 @@ class ShimmerSkeleton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 // Title Placeholder
                 Container(
                   height: 15,
                   width: 100,
                   color: Colors.grey[300],
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 // Price Placeholder
                 Container(
                   height: 15,

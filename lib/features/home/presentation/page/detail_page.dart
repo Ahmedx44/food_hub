@@ -125,15 +125,16 @@ class _ItemDetailState extends State<ItemDetail> {
                 ),
               ),
               Container(
-                decoration: BoxDecoration(),
+                decoration: const BoxDecoration(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
                         onPressed: () {
                           setState(() {
-                            if (quantity < widget.item['item left'])
+                            if (quantity < widget.item['item left']) {
                               quantity = quantity + 1;
+                            }
                           });
                         },
                         icon: Container(

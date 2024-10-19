@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_hub/features/cart/domain/usecase/get_all_cart.dart';
@@ -36,12 +37,21 @@ class CartScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final item = state.cartItem[index];
                   return ListTile(
-                    title: Text(item.name),
+                    leading: AspectRatio(
+                      aspectRatio: 1.2,
+                      child: ExtendedImage.network(cache: true, item.imageUrl),
+                    ),
+                    title: Text(
+                      item.name,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSecondary),
+                    ),
                   );
                 },
               );
             } else if (state is CartStateError) {
-              return Center(child: Text("Error: "));
+              return const Center(child: Text("Error: "));
             }
 
             return const Center(child: Text("No data available"));

@@ -13,7 +13,6 @@ import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart
 import 'package:food_hub/firebase_options.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {

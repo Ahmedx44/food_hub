@@ -222,31 +222,49 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     } else if (state is HomeStateLoaded) {
                       return StreamBuilder(
-                          stream: state.result,
-                          builder: (context, snapshot) {
-                            return GridView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      mainAxisSpacing: 5,
-                                      crossAxisSpacing: 5,
-                                      crossAxisCount: 2),
-                              itemBuilder: (context, index) {
-                                final item = snapshot.data!.docs[index];
+                        stream: state.result,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData && snapshot.data != null) {
+                            if (snapshot.data!.docs.isNotEmpty) {
+                              return GridView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: snapshot.data!.docs.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisSpacing: 5,
+                                  crossAxisSpacing: 5,
+                                  crossAxisCount: 2,
+                                ),
+                                itemBuilder: (context, index) {
+                                  final item = snapshot.data!.docs[index];
 
-                                return GestureDetector(
-                                  onTap: () {
-                                    context.push('/itemdetail', extra: item);
-                                  },
-                                  child: Items(
-                                    item: item,
-                                  ),
-                                );
-                              },
+                                  return GestureDetector(
+                                    onTap: () {
+                                      context.push('/itemdetail', extra: item);
+                                    },
+                                    child: Items(
+                                      item: item,
+                                    ),
+                                  );
+                                },
+                              );
+                            } else {
+                              return const Center(
+                                child: Text('No items found'),
+                              );
+                            }
+                          } else if (snapshot.hasError) {
+                            return const Center(
+                              child: Text('Failed to load data'),
                             );
-                          });
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      );
                     } else if (state is HomeStateLoadError) {
                       return const Center(
                         child: Text('Failed to load popular items'),
@@ -254,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
                     return Container();
                   },
-                ),
+                )
               ],
             ),
           ),
