@@ -232,8 +232,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: snapshot.data!.docs.length,
                                 gridDelegate:
                                     const SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisSpacing: 5,
-                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 2,
+                                  crossAxisSpacing: 1,
+                                  childAspectRatio: 0.7,
                                   crossAxisCount: 2,
                                 ),
                                 itemBuilder: (context, index) {
@@ -243,8 +244,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       context.push('/itemdetail', extra: item);
                                     },
-                                    child: Items(
-                                      item: item,
+                                    child: SizedBox(
+                                      height: 400,
+                                      child: Items(
+                                        item: item,
+                                      ),
                                     ),
                                   );
                                 },

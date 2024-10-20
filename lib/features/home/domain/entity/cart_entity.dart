@@ -20,18 +20,21 @@ class CartItem extends HiveObject {
   String name;
 
   @HiveField(5)
-  String price;
+  double price;
 
   @HiveField(6)
   String rating;
 
-  CartItem({
-    required this.category,
-    required this.description,
-    required this.imageUrl,
-    required this.itemLeft,
-    required this.name,
-    required this.price,
-    required this.rating,
-  });
+  @HiveField(7)
+  String quantity;
+
+  CartItem(
+      {required this.category,
+      required this.description,
+      required this.imageUrl,
+      required this.itemLeft,
+      required this.name,
+      required this.price,
+      required this.rating,
+      required this.quantity});
 }

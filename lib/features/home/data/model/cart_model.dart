@@ -4,11 +4,13 @@ class CartModel {
   String imageUrl;
   String itemLeft;
   String name;
-  String price;
+  double price;
   String rating;
+  String quantity;
 
   CartModel({
     required this.category,
+    required this.quantity,
     required this.description,
     required this.imageUrl,
     required this.itemLeft,

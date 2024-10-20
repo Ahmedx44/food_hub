@@ -34,12 +34,13 @@ class ItemServiceImpl extends ItemService {
     try {
       print(cartModel.name);
       box.add(CartItem(
+          quantity: cartModel.quantity,
           category: cartModel.category,
           description: cartModel.description,
           imageUrl: cartModel.imageUrl,
           itemLeft: cartModel.itemLeft,
           name: cartModel.name,
-          price: cartModel.price.toString(),
+          price: cartModel.price,
           rating: cartModel.rating.toString()));
       return const Right('Your Item has Been Succesfully Added to Cart');
     } catch (e) {
