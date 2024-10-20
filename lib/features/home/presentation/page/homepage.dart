@@ -12,6 +12,7 @@ import 'package:food_hub/features/home/presentation/widegt/custom_Card.dart';
 import 'package:food_hub/features/home/presentation/widegt/item_skeleton.dart';
 import 'package:food_hub/features/home/presentation/widegt/items.dart';
 import 'package:food_hub/features/home/presentation/widegt/mini_card.dart';
+import 'package:food_hub/features/home/presentation/widegt/my_app_bar.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -72,41 +73,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser!.displayName;
     return BlocProvider(
       create: (context) => HomeCubit(sl<GetItemUsecase>())..getPopularItem(),
       child: Scaffold(
+        appBar: MyAppBar(
+          name: user.toString(),
+          location: location.toString(),
+          widget: IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_none_outlined),
+          ),
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Padding(
-                  padding:
-                      EdgeInsets.all(MediaQuery.of(context).size.height * 0.03),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hello ${FirebaseAuth.instance.currentUser!.displayName}',
-                            style: const TextStyle(
-                                fontSize: 13, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            location.toString(),
-                            style: const TextStyle(
-                                fontSize: 13, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.notifications_none_outlined),
-                      ),
-                    ],
-                  ),
-                ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Padding(
                   padding: EdgeInsets.symmetric(
