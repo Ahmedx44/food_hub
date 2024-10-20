@@ -8,6 +8,11 @@ import 'package:food_hub/service_locator.dart';
 class CartRepositoryImpl extends CartRepository {
   @override
   Future<Either<String, List<CartItem>>> getcart() async {
-    return sl<CartService>().getcart();
+    return sl<CartService>().getCart();
+  }
+
+  @override
+  Future<Either<String, List<CartItem>>> removeItem(String name) {
+    return sl<CartService>().removeItem(name);
   }
 }

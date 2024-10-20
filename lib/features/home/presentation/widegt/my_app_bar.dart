@@ -1,16 +1,20 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui'; // For BackdropFilter
+import 'dart:ui';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_hub/core/assets/app_image.dart';
+import 'package:food_hub/core/common/bloc/profile_bloc/profile_cubit.dart';
+import 'package:food_hub/core/common/bloc/profile_bloc/profile_state.dart'; // For BackdropFilter
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String name;
   final String location;
-  final Widget widget; // The widget you want to display in the app bar
 
   const MyAppBar({
     super.key,
     required this.name,
     required this.location,
-    required this.widget,
   });
 
   @override
@@ -27,23 +31,24 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height *
-                          0.03, // Increase space to bring text lower
+                      height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(
-                          left: 10), // Adjust margin for better positioning
+                      margin: const EdgeInsets.only(left: 10),
                       child: Text(
                         'Hello $name',
                         style: TextStyle(
-                            fontSize: 15, // Slightly larger text
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSecondary),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                       ),
                     ),
                     Container(
@@ -51,14 +56,40 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Text(
                         location,
                         style: TextStyle(
-                            fontSize: 15, // Slightly larger text
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSecondary),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                widget,
+                Container(
+                  margin: EdgeInsets.only(top: 20, right: 10),
+                  child: BlocProvider(
+                    create: (context) => ProfileCubit()..getProfile(),
+                    child: BlocBuilder<ProfileCubit, ProfileState>(
+                      builder: (context, state) {
+                        if (state is ProfileStateLoading) {
+                          return const CircularProgressIndicator();
+                        } else if (state is ProfileStateLoaded) {
+                          return ExtendedImage.network(
+                            state.profileImageUrl.isEmpty
+                                ? AppImage.apple
+                                : state.profileImageUrl,
+                            width: 40.0,
+                            height: 40.0,
+                            fit: BoxFit.cover,
+                            shape: BoxShape.circle,
+                          );
+                        } else if (state is ProfileStateError) {
+                          return Icon(Icons.error); // Display error icon
+                        }
+                        return Container();
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -68,6 +99,5 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(
-      kToolbarHeight); // Set the preferred height for the app bar
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

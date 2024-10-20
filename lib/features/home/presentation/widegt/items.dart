@@ -144,7 +144,7 @@ class _ItemsState extends State<Items> {
               },
               child: Container(
                 padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height * 0.005),
+                    vertical: MediaQuery.of(context).size.height * 0.015),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Theme.of(context).colorScheme.primary,
@@ -155,7 +155,7 @@ class _ItemsState extends State<Items> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.onSecondary,
-                        fontSize: 17),
+                        fontSize: 13),
                   ),
                 ),
               ),

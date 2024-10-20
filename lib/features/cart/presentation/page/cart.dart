@@ -1,14 +1,19 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_hub/features/cart/domain/usecase/get_all_cart.dart';
 import 'package:food_hub/features/cart/presentation/bloc/cart_cubit.dart';
 import 'package:food_hub/features/cart/presentation/bloc/cart_state.dart';
+import 'package:food_hub/features/cart/presentation/widget/cart_item_tile.dart';
 import 'package:food_hub/service_locator.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
 
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -19,7 +24,13 @@ class CartScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Your Cart"),
+          centerTitle: true,
+          title: const Text(
+            "Cart",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         body: BlocBuilder<CartCubit, CartState>(
           builder: (context, state) {
@@ -33,25 +44,20 @@ class CartScreen extends StatelessWidget {
               }
 
               return ListView.builder(
-                itemCount: state.cartItem.length, // Define item count
+                itemCount: state.cartItem.length,
                 itemBuilder: (context, index) {
                   final item = state.cartItem[index];
-                  return ListTile(
-                    leading: AspectRatio(
-                      aspectRatio: 1.2,
-                      child: ExtendedImage.network(cache: true, item.imageUrl),
-                    ),
-                    title: Text(
-                      item.name,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSecondary),
-                    ),
-                  );
+                  return CartItemTile(
+                      item: item,
+                      onUpdate: (updatedQuantity) {
+                        setState(() {
+                          item.quantity = updatedQuantity.toString();
+                        });
+                      });
                 },
               );
             } else if (state is CartStateError) {
-              return const Center(child: Text("Error: "));
+              return const Center(child: Text("Error: Failed to load cart"));
             }
 
             return const Center(child: Text("No data available"));

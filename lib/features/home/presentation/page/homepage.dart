@@ -80,10 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: MyAppBar(
           name: user.toString(),
           location: location.toString(),
-          widget: IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_none_outlined),
-          ),
         ),
         body: SafeArea(
           child: SingleChildScrollView(
