@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_hub/features/home/data/model/cart_model.dart';
-import 'package:food_hub/features/home/domain/entity/cart_entity.dart';
-import 'package:hive/hive.dart';
 
 abstract class ItemService {
   Future<Either<String, Stream<QuerySnapshot<Map<String, dynamic>>>>>

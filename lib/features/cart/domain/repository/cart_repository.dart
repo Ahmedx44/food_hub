@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:food_hub/features/home/domain/entity/cart_entity.dart';
+import 'package:food_hub/features/home/data/model/cart_model.dart';
 
 abstract class CartRepository {
-  Future<Either<String, List<CartItem>>> getcart();
-  Future<Either<String, List<CartItem>>> removeItem(String name);
+  Future<Stream<List<CartModel>>> getCartStream(); // Updated return type
+  Future<Either<String, List<CartModel>>> removeItem(String productId);
 }

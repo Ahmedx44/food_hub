@@ -1,41 +1,84 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:food_hub/features/home/domain/entity/cart_entity.dart';
-import 'package:hive/hive.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:food_hub/features/home/data/model/cart_model.dart';
 
 abstract class CartService {
-  Future<Either<String, List<CartItem>>> getCart();
-  Future<Either<String, List<CartItem>>> removeItem(String name);
+  Stream<List<CartModel>> getCartStream();
+  Future<Either<String, List<CartModel>>> removeItem(String productId);
 }
 
 class CartServiceImpl extends CartService {
+  final String? user = FirebaseAuth.instance.currentUser?.uid;
+
   @override
-  Future<Either<String, List<CartItem>>> getCart() async {
-    final box = Hive.box<CartItem>('cart_item');
-    try {
-      final list = box.values.toList(); // Retrieve all cart items
-      return Right(list); // Return list of items
-    } catch (e) {
-      return const Left('Unable to retrieve cart items');
+  Stream<List<CartModel>> getCartStream() {
+    if (user == null) {
+      return Stream.error('User not authenticated');
     }
+
+    // Reference to the user's cart document in Firestore
+    return FirebaseFirestore.instance
+        .collection('carts')
+        .doc(user)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.exists) {
+        final List<dynamic> items = snapshot.data()?['items'] ?? [];
+
+        // Map the items to a list of CartModel
+        return items.map((item) {
+          return CartModel(
+            category: item['category'] ?? '',
+            description: item['description'] ?? '',
+            imageUrl: item['image'] ?? '',
+            itemLeft: item['itemLeft'] ?? '',
+            rating: item['rating'] ?? '',
+            id: item['id'] ?? '',
+            name: item['name'] ?? 'Unnamed Item',
+            quantity: (item['quantity'] ?? '0').toString(),
+            price: (item['price'] ?? '0.0'),
+          );
+        }).toList();
+      } else {
+        return [];
+      }
+    });
   }
 
   @override
-  Future<Either<String, List<CartItem>>> removeItem(String name) async {
-    final box = Hive.box<CartItem>('cart_item');
+  Future<Either<String, List<CartModel>>> removeItem(String productId) async {
     try {
-      // Find the item by name and remove it
-      final itemToRemove = box.values.firstWhere(
-        (item) => item.name == name,
-      );
+      if (user == null) {
+        return const Left('User not authenticated');
+      }
 
-      if (itemToRemove != null) {
-        itemToRemove.delete();
-        return Right(box.values.toList());
+      final cartDoc = FirebaseFirestore.instance.collection('carts').doc(user);
+      final snapshot = await cartDoc.get();
+
+      if (snapshot.exists) {
+        final List<dynamic> items = snapshot.data()?['items'] ?? [];
+        items.removeWhere((item) => item['name'] == productId);
+        await cartDoc.update({'items': items});
+
+        return Right(items.map((item) {
+          return CartModel(
+            category: item['category'] ?? '',
+            description: item['description'] ?? '',
+            imageUrl: item['image'] ?? '',
+            itemLeft: item['itemLeft'] ?? '',
+            rating: item['rating'] ?? '',
+            id: item['id'] ?? '',
+            name: item['name'] ?? 'Unnamed Item',
+            quantity: (item['quantity'] ?? '0').toString(),
+            price: (item['price'] ?? '0.0'),
+          );
+        }).toList());
       } else {
-        return const Left('Item not found');
+        return const Left('Cart not found');
       }
     } catch (e) {
-      return const Left('Unable to remove item');
+      return Left('Unable to remove item: ${e.toString()}');
     }
   }
 }

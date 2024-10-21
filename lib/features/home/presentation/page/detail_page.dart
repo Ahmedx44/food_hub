@@ -175,11 +175,12 @@ class _ItemDetailState extends State<ItemDetail> {
                     ));
 
                     result.fold((ifLeft) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(ifLeft)));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.red, content: Text(ifLeft)));
                     }, (ifRight) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(ifRight)));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text(ifRight)));
                     });
                   } catch (error, stackTrace) {
                     debugPrint(

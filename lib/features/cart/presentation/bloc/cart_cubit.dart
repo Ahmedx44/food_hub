@@ -7,14 +7,19 @@ class CartCubit extends Cubit<CartState> {
 
   CartCubit(this.getAllCart) : super(CartStateInitial());
 
-  Future<void> getCart() async {
+  void getCart() {
     emit(CartStateLoading());
 
-    final result = await getAllCart.call();
-    result.fold((ifLeft) {
-      emit(CartStateError());
-    }, (ifRight) {
-      emit(CartStateLoaded(cartItem: ifRight));
+    final futureResult =
+        getAllCart(); // This returns a Future<Stream<List<CartModel>>>
+
+    futureResult.then((stream) {
+      emit(CartStateLoaded(
+          cartItem: stream)); // On success, emit the loaded state
+    }).catchError((error) {
+      emit(CartStateError(error.toString())); // On error, emit an error state
     });
   }
+
+  void updateQuantity() {}
 }

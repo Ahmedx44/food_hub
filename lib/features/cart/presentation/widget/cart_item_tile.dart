@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:food_hub/features/cart/domain/usecase/remove_item.dart';
-
-import 'package:food_hub/features/home/domain/entity/cart_entity.dart';
+import 'package:food_hub/features/home/data/model/cart_model.dart';
 import 'package:food_hub/service_locator.dart';
 
 class CartItemTile extends StatefulWidget {
-  final CartItem item;
+  final CartModel item;
   final Function(String) onUpdate;
 
   const CartItemTile({
