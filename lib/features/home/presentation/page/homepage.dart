@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 220,
+                  height: MediaQuery.of(context).size.height * 0.27,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: const [

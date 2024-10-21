@@ -22,8 +22,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       if (userDoc.exists) {
         final userData = userDoc.data();
         final profileUrl = userData?['imageUrl'] ?? '';
-        print(profileUrl);
-        print('hello');
         emit(ProfileStateLoaded(profileImageUrl: profileUrl));
       } else {
         emit(ProfileStateError(message: "User profile not found"));

@@ -65,7 +65,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 20, right: 10),
+                  margin: const EdgeInsets.only(top: 20, right: 10),
                   child: BlocProvider(
                     create: (context) => ProfileCubit()..getProfile(),
                     child: BlocBuilder<ProfileCubit, ProfileState>(
@@ -83,7 +83,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                             shape: BoxShape.circle,
                           );
                         } else if (state is ProfileStateError) {
-                          return Icon(Icons.error); // Display error icon
+                          return const Icon(Icons.error);
                         }
                         return Container();
                       },

@@ -163,6 +163,7 @@ class _ItemDetailState extends State<ItemDetail> {
                   try {
                     double totalPrice = widget.item['price'] * quantity;
                     final result = await sl<AddToCartUsecase>().call(CartModel(
+                      id: widget.item.id,
                       quantity: quantity.toString(),
                       category: widget.item['category'],
                       description: widget.item['description'],

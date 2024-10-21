@@ -59,9 +59,3 @@ class ShimmerSkeleton extends StatelessWidget {
     );
   }
 }
-
-void main() {
-  runApp(MaterialApp(
-    home: ShimmerSkeleton(),
-  ));
-}

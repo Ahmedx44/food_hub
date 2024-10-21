@@ -14,7 +14,7 @@ class MiniCards extends StatelessWidget {
       margin: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.02,
           vertical: MediaQuery.of(context).size.height * 0.03),
-      height: 130,
+      height: 180,
       width: 150,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),

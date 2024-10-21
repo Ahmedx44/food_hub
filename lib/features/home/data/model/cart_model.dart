@@ -1,4 +1,5 @@
 class CartModel {
+  String id;
   String category;
   String description;
   String imageUrl;
@@ -9,6 +10,7 @@ class CartModel {
   String quantity;
 
   CartModel({
+    required this.id,
     required this.category,
     required this.quantity,
     required this.description,

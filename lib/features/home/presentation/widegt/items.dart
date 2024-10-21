@@ -115,8 +115,9 @@ class _ItemsState extends State<Items> {
               onTap: () async {
                 try {
                   double totalPrice = widget.item['price'] * quantity;
-                  print('Price: ${totalPrice}');
+
                   final result = await sl<AddToCartUsecase>().call(CartModel(
+                    id: widget.item.id,
                     quantity: quantity.toString(),
                     category: widget.item['category'],
                     description: widget.item['description'],
@@ -133,7 +134,7 @@ class _ItemsState extends State<Items> {
                         backgroundColor: Colors.red, content: Text(ifLeft)));
                   }, (ifRight) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        duration: Duration(seconds: 1),
+                        duration: const Duration(seconds: 1),
                         backgroundColor: Colors.green,
                         content: Text(ifRight)));
                   });
