@@ -124,7 +124,7 @@ class _ItemsState extends State<Items> {
                     imageUrl: widget.item['image_url'],
                     itemLeft: widget.item['item left'].toString(),
                     name: widget.item['name'],
-                    price: totalPrice,
+                    price: totalPrice.toString(),
                     rating: widget.item['rating']
                         .toString(), // Ensure this is a String
                   ));

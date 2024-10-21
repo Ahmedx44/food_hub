@@ -8,6 +8,7 @@ import 'package:food_hub/features/cart/data/repository/cart_repository_impl.dart
 import 'package:food_hub/features/cart/data/source/cart_service.dart';
 import 'package:food_hub/features/cart/domain/usecase/get_all_cart.dart';
 import 'package:food_hub/features/cart/domain/usecase/remove_item.dart';
+import 'package:food_hub/features/cart/domain/usecase/update_quantity_usecase.dart';
 import 'package:food_hub/features/home/data/repository/item_repository_impl.dart';
 import 'package:food_hub/features/home/data/repository/location_repositoy_impl.dart';
 import 'package:food_hub/features/home/data/source/item_Service.dart';
@@ -62,6 +63,9 @@ Future<void> initializedDependency() async {
   );
   sl.registerSingleton<RemoveItem>(
     RemoveItem(),
+  );
+  sl.registerSingleton<UpdateQuantityUsecase>(
+    UpdateQuantityUsecase(),
   );
 
   //Implementation

@@ -6,22 +6,17 @@ import 'package:food_hub/features/auth/presentation/pages/auth_gate.dart';
 import 'package:food_hub/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:food_hub/features/auth/presentation/pages/login.dart';
 import 'package:food_hub/features/auth/presentation/pages/signup.dart';
-import 'package:food_hub/features/home/domain/entity/cart_entity.dart';
 import 'package:food_hub/features/home/presentation/home.dart';
 import 'package:food_hub/features/home/presentation/page/detail_page.dart';
 import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:food_hub/firebase_options.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await initializedDependency();
-  await Hive.initFlutter();
-  Hive.registerAdapter(CartItemAdapter());
-  await Hive.openBox<CartItem>('cart_item');
 
   runApp(const MyApp());
 }

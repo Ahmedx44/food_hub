@@ -6,6 +6,7 @@ import 'package:food_hub/features/home/data/model/cart_model.dart';
 abstract class CartService {
   Stream<List<CartModel>> getCartStream();
   Future<Either<String, List<CartModel>>> removeItem(String productId);
+  Future<Either<String, String>> updateQuantity(String itemid, int quantity);
 }
 
 class CartServiceImpl extends CartService {
@@ -17,7 +18,6 @@ class CartServiceImpl extends CartService {
       return Stream.error('User not authenticated');
     }
 
-    // Reference to the user's cart document in Firestore
     return FirebaseFirestore.instance
         .collection('carts')
         .doc(user)
@@ -32,7 +32,7 @@ class CartServiceImpl extends CartService {
             category: item['category'] ?? '',
             description: item['description'] ?? '',
             imageUrl: item['image'] ?? '',
-            itemLeft: item['itemLeft'] ?? '',
+            itemLeft: item['item_left'] ?? '',
             rating: item['rating'] ?? '',
             id: item['id'] ?? '',
             name: item['name'] ?? 'Unnamed Item',
@@ -79,6 +79,22 @@ class CartServiceImpl extends CartService {
       }
     } catch (e) {
       return Left('Unable to remove item: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<Either<String, String>> updateQuantity(
+      String name, int quantity) async {
+    final cartDoc = FirebaseFirestore.instance.collection('carts').doc(user);
+    final snapshot = await cartDoc.get();
+
+    try {
+      final List<dynamic> items = snapshot.data()?['items'] ?? [];
+      items.removeWhere((item) => item['name'] == name);
+      await cartDoc.update({'quantity': quantity});
+      return Right('increased');
+    } catch (e) {
+      return Left('Something failed');
     }
   }
 }

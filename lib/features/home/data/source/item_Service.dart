@@ -30,37 +30,43 @@ class ItemServiceImpl extends ItemService {
   @override
   Future<Either<String, String>> addtocart(CartModel cartModel) async {
     try {
-      // Get the current user ID
       final userId = FirebaseAuth.instance.currentUser!.uid;
-
-      // Reference to the user's cart document
       final cartDocRef = _firebaseFirestore.collection('carts').doc(userId);
 
-      // Get the existing cart items (if any)
       final cartDoc = await cartDocRef.get();
 
       List<Map<String, dynamic>> cartItems = [];
 
       if (cartDoc.exists) {
-        // If the cart exists, retrieve the existing cart items
         cartItems =
             List<Map<String, dynamic>>.from(cartDoc.data()?['items'] ?? []);
       }
 
-      // Check if the item is already in the cart
+      // Find the index of the item in the cart using the 'name'
       final itemIndex =
-          cartItems.indexWhere((item) => item['productId'] == cartModel.id);
+          cartItems.indexWhere((item) => item['name'] == cartModel.name);
 
       if (itemIndex >= 0) {
-        // If the item already exists, update the quantity
-        cartItems[itemIndex]['quantity'] += cartModel.quantity;
+        // If the item exists, update only this specific item's quantity and price
+        int currentQuantity = int.parse(
+            cartItems[itemIndex]['quantity']); // Current quantity of the item
+        double currentPrice = double.parse(
+            cartItems[itemIndex]['price']); // Current price of the item
+
+        // Increment quantity by 1 (or any other logic)
+        currentQuantity += int.parse(cartModel.quantity.toString());
+
+        // Update the price based on the new quantity
+        cartItems[itemIndex]['quantity'] = currentQuantity.toString();
+        cartItems[itemIndex]['price'] =
+            (currentPrice * currentQuantity).toString();
       } else {
-        // If the item doesn't exist, add it to the cart
+        // If the item is not in the cart, add it as a new item
         cartItems.add({
           'name': cartModel.name,
           'image': cartModel.imageUrl,
-          'quantity': cartModel.quantity,
-          'price': cartModel.price,
+          'quantity': cartModel.quantity.toString(),
+          'price': cartModel.price.toString(),
           'item_left': cartModel.itemLeft
         });
       }
@@ -68,8 +74,7 @@ class ItemServiceImpl extends ItemService {
       // Update the cart document with the modified cart items array
       await cartDocRef.set({
         'items': cartItems,
-        'updatedAt':
-            Timestamp.now(), // You can store additional fields like updatedAt
+        'updatedAt': Timestamp.now(), // Update timestamp
       });
 
       return const Right('Your item has been successfully added to cart');

@@ -67,8 +67,10 @@ class _CartItemTileState extends State<CartItemTile> {
                         children: [
                           IconButton(
                             onPressed: () {
+                              print(widget.item.itemLeft.toString());
                               setState(() {
-                                if (quantity < 10) {
+                                if (quantity <
+                                    int.parse(widget.item.itemLeft)) {
                                   quantity++;
                                   widget.onUpdate(quantity.toString());
                                 }
@@ -118,12 +120,12 @@ class _CartItemTileState extends State<CartItemTile> {
 
                       result.fold((ifLeft) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             backgroundColor: Colors.green,
                             content: Text(ifLeft)));
                       }, (ifRight) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             backgroundColor: Colors.green,
                             content: Text(ifRight.toString())));
                       });
@@ -131,7 +133,7 @@ class _CartItemTileState extends State<CartItemTile> {
                     icon: const Icon(Icons.cancel),
                   ),
                   Text(
-                    '\$${widget.item.price}',
+                    '\$${(double.parse(widget.item.price) * quantity).toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 17,
                       color: Theme.of(context).colorScheme.primary,

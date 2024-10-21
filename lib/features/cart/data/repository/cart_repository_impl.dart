@@ -7,13 +7,16 @@ import 'package:food_hub/service_locator.dart';
 class CartRepositoryImpl extends CartRepository {
   @override
   Future<Stream<List<CartModel>>> getCartStream() async {
-    // Call getCart from CartService and return the list of CartModel
     return sl<CartService>().getCartStream();
   }
 
   @override
   Future<Either<String, List<CartModel>>> removeItem(String productId) {
-    // Call removeItem from CartService and return the updated list of CartModel
     return sl<CartService>().removeItem(productId);
+  }
+
+  @override
+  Future<Either<String, String>> updateQuantity(String itemid, int quantity) {
+    return sl<CartService>().updateQuantity(itemid, quantity);
   }
 }

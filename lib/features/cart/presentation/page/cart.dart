@@ -62,10 +62,9 @@ class _CartScreenState extends State<CartScreen> {
                             return CartItemTile(
                                 item: item,
                                 onUpdate: (updatedQuantity) {
-                                  // Call the Cubit method to update quantity
                                   context.read<CartCubit>().updateQuantity(
-                                      // item.id,
-                                      // int.parse(updatedQuantity),
+                                        item.name,
+                                        int.parse(updatedQuantity),
                                       );
                                 });
                           },

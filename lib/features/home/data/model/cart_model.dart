@@ -5,7 +5,7 @@ class CartModel {
   String imageUrl;
   String itemLeft;
   String name;
-  double price;
+  String price;
   String rating;
   String quantity;
 
