@@ -6,7 +6,6 @@ import 'package:food_hub/features/cart/presentation/bloc/cart_cubit.dart';
 import 'package:food_hub/features/cart/presentation/bloc/cart_state.dart';
 import 'package:food_hub/features/cart/presentation/page/checkout_page.dart';
 import 'package:food_hub/features/cart/presentation/widget/cart_item_tile.dart';
-import 'package:food_hub/features/home/presentation/widegt/my_app_bar.dart';
 import 'package:food_hub/service_locator.dart';
 
 class CartScreen extends StatefulWidget {
@@ -22,13 +21,6 @@ class _CartScreenState extends State<CartScreen> {
     return BlocProvider(
       create: (context) => CartCubit(sl<GetAllCart>())..getCart(),
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            'Cart',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
         body: BlocBuilder<CartCubit, CartState>(
           builder: (context, state) {
             if (state is CartStateLoading) {
@@ -60,7 +52,10 @@ class _CartScreenState extends State<CartScreen> {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.60,
+                          height: MediaQuery.of(context).size.height * 0.04,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.68,
                           child: ListView.builder(
                             itemCount: cartItems.length,
                             itemBuilder: (context, index) {
@@ -99,7 +94,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.0001,
+                          height: MediaQuery.of(context).size.height * 0.01,
                         ),
 
                         GestureDetector(
@@ -107,15 +102,16 @@ class _CartScreenState extends State<CartScreen> {
                             showBottomSheet(
                               enableDrag: true,
                               elevation: 0,
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.tertiary,
                               showDragHandle: true,
                               sheetAnimationStyle: AnimationStyle(
                                   curve: Curves.bounceInOut,
                                   duration: const Duration(milliseconds: 500)),
                               context: context,
                               builder: (context) {
-                                return const CheckoutPage();
+                                return CheckoutPage(
+                                  totalPrice: totalPrice,
+                                  cartItems: cartItems,
+                                );
                               },
                             );
                           },
@@ -138,9 +134,6 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
-                        )
                       ],
                     ),
                   );

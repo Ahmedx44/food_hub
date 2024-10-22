@@ -59,6 +59,7 @@ dependencies:
   flutter_map: ^7.0.2
   latlong2: ^0.9.1
   url_launcher:
+  easy_stepper: ^0.8.5+1
  
  
 

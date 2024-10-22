@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.02),
+                      horizontal: MediaQuery.of(context).size.width * 0.05),
                   child: Row(
                     children: [
                       Expanded(
