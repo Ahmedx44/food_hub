@@ -69,8 +69,7 @@ class ItemServiceImpl extends ItemService {
 
       totalPrice = cartItems.fold(0.0, (sum, item) {
         return sum +
-            (double.parse(item['original_price']) *
-                int.parse(item['quantity']));
+            (double.parse(item['current_price']) * int.parse(item['quantity']));
       });
 
       await cartDocRef.set({

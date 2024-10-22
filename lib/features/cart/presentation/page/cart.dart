@@ -51,46 +51,80 @@ class _CartScreenState extends State<CartScreen> {
 
                   final cartItems = snapshot.data!;
 
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        child: ListView.builder(
-                          itemCount: cartItems.length,
-                          itemBuilder: (context, index) {
-                            final item = cartItems[index];
-                            return CartItemTile(
-                                item: item,
-                                onUpdate: (updatedQuantity) {
-                                  context.read<CartCubit>().updateQuantity(
-                                        item.name,
-                                        int.parse(updatedQuantity),
-                                      );
-                                });
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.01,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(20),
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).colorScheme.primary),
-                        child: Center(
-                          child: Text(
-                            'Checkout',
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color:
-                                    Theme.of(context).colorScheme.onSecondary),
+                  double totalPrice = cartItems.fold(0.0, (sum, item) {
+                    return sum +
+                        ((item.originalprice) * double.parse(item.quantity));
+                  });
+
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.60,
+                          child: ListView.builder(
+                            itemCount: cartItems.length,
+                            itemBuilder: (context, index) {
+                              final item = cartItems[index];
+                              return CartItemTile(
+                                  item: item,
+                                  onUpdate: (updatedQuantity) {
+                                    context.read<CartCubit>().updateQuantity(
+                                          item.name,
+                                          int.parse(updatedQuantity),
+                                        );
+                                  });
+                            },
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        // Display Total Price
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Total Price:',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                '\$${totalPrice.toStringAsFixed(2)}', // Format the total price
+                                style: const TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.0001,
+                        ),
+
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding: const EdgeInsets.all(20),
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Theme.of(context).colorScheme.primary),
+                            child: Center(
+                              child: Text(
+                                'Checkout',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
               );

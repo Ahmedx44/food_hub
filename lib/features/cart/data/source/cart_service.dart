@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
-import 'package:food_hub/features/home/data/model/cart_model.dart';
 
 abstract class CartService {
   Stream<List<InCartModel>> getCartStream();
-  Future<Either<String, List<CartModel>>> removeItem(String productId);
+  Future<Either<String, String>> removeItem(String productId);
   Future<Either<String, String>> updateQuantity(String itemid, int quantity);
 }
 
@@ -27,9 +26,9 @@ class CartServiceImpl extends CartService {
       if (snapshot.exists) {
         final List<dynamic> items = snapshot.data()?['items'] ?? [];
 
-        // Map the items to a list of CartModel
         return items.map((item) {
           return InCartModel(
+            originalprice: double.parse(((item['original_price'] ?? '0.0'))),
             category: item['category'] ?? '',
             description: item['description'] ?? '',
             imageUrl: item['image'] ?? '',
@@ -48,7 +47,7 @@ class CartServiceImpl extends CartService {
   }
 
   @override
-  Future<Either<String, List<CartModel>>> removeItem(String productId) async {
+  Future<Either<String, String>> removeItem(String productId) async {
     try {
       if (user == null) {
         return const Left('User not authenticated');
@@ -60,21 +59,10 @@ class CartServiceImpl extends CartService {
       if (snapshot.exists) {
         final List<dynamic> items = snapshot.data()?['items'] ?? [];
         items.removeWhere((item) => item['name'] == productId);
+
         await cartDoc.update({'items': items});
 
-        return Right(items.map((item) {
-          return CartModel(
-            category: item['category'] ?? '',
-            description: item['description'] ?? '',
-            imageUrl: item['image'] ?? '',
-            itemLeft: item['itemLeft'] ?? '',
-            rating: item['rating'] ?? '',
-            id: item['id'] ?? '',
-            name: item['name'] ?? 'Unnamed Item',
-            quantity: (item['quantity'] ?? '0').toString(),
-            price: (item['current_price'] ?? '0.0'),
-          );
-        }).toList());
+        return const Right('Cart removed');
       } else {
         return const Left('Cart not found');
       }
