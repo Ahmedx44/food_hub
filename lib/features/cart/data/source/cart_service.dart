@@ -38,7 +38,7 @@ class CartServiceImpl extends CartService {
             id: item['id'] ?? '',
             name: item['name'] ?? 'Unnamed Item',
             quantity: (item['quantity'] ?? '0').toString(),
-            price: double.parse(((item['price'] ?? '0.0'))),
+            price: double.parse(((item['current_price'] ?? '0.0'))),
           );
         }).toList();
       } else {
@@ -72,7 +72,7 @@ class CartServiceImpl extends CartService {
             id: item['id'] ?? '',
             name: item['name'] ?? 'Unnamed Item',
             quantity: (item['quantity'] ?? '0').toString(),
-            price: (item['price'] ?? '0.0'),
+            price: (item['current_price'] ?? '0.0'),
           );
         }).toList());
       } else {
@@ -105,9 +105,10 @@ class CartServiceImpl extends CartService {
 
       // Update the quantity of the specific item
       items[itemIndex]['quantity'] = quantity.toString();
-      items[itemIndex]['price'] = (double.parse(items[itemIndex]['price']) *
-              int.parse(items[itemIndex]['quantity']))
-          .toString();
+      items[itemIndex]['current_price'] =
+          (double.parse(items[itemIndex]['original_price']) *
+                  int.parse(items[itemIndex]['quantity']))
+              .toString();
 
       // Update the entire 'items' array in Firestore
       await cartDoc.update({'items': items});

@@ -29,7 +29,8 @@ class _CartItemTileState extends State<CartItemTile> {
 
   @override
   Widget build(BuildContext context) {
-    final total_price = widget.item.price * quantity;
+    final total_price = widget.item.price;
+    print(widget.item.price);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
