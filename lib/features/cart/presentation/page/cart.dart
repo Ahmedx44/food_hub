@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
 import 'package:food_hub/features/cart/domain/usecase/get_all_cart.dart';
 import 'package:food_hub/features/cart/presentation/bloc/cart_cubit.dart';
 import 'package:food_hub/features/cart/presentation/bloc/cart_state.dart';
 import 'package:food_hub/features/cart/presentation/widget/cart_item_tile.dart';
-import 'package:food_hub/features/home/data/model/cart_model.dart';
 import 'package:food_hub/service_locator.dart';
 
 class CartScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _CartScreenState extends State<CartScreen> {
                 child: CircularProgressIndicator(),
               );
             } else if (state is CartStateLoaded) {
-              return StreamBuilder<List<CartModel>>(
+              return StreamBuilder<List<InCartModel>>(
                 stream: state.cartItem, // Listening to the stream
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {

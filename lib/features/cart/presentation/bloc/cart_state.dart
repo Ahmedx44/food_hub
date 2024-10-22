@@ -1,5 +1,5 @@
 // Base class for CartState
-import 'package:food_hub/features/home/data/model/cart_model.dart';
+import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
 
 abstract class CartState {}
 
@@ -8,7 +8,7 @@ class CartStateLoading extends CartState {}
 
 // State when the cart is successfully loaded with cart items
 class CartStateLoaded extends CartState {
-  final Stream<List<CartModel>> cartItem;
+  final Stream<List<InCartModel>> cartItem;
 
   CartStateLoaded({required this.cartItem});
 }

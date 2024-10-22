@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
 import 'package:food_hub/features/cart/domain/usecase/remove_item.dart';
-import 'package:food_hub/features/home/data/model/cart_model.dart';
 import 'package:food_hub/service_locator.dart';
 
 class CartItemTile extends StatefulWidget {
-  final CartModel item;
+  final InCartModel item;
   final Function(String) onUpdate;
 
   const CartItemTile({
@@ -29,6 +29,7 @@ class _CartItemTileState extends State<CartItemTile> {
 
   @override
   Widget build(BuildContext context) {
+    final total_price = widget.item.price * quantity;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -133,7 +134,7 @@ class _CartItemTileState extends State<CartItemTile> {
                     icon: const Icon(Icons.cancel),
                   ),
                   Text(
-                    '\$${(double.parse(widget.item.price) * quantity).toStringAsFixed(2)}',
+                    total_price.toStringAsFixed(2),
                     style: TextStyle(
                       fontSize: 17,
                       color: Theme.of(context).colorScheme.primary,

@@ -36,32 +36,26 @@ class ItemServiceImpl extends ItemService {
       final cartDoc = await cartDocRef.get();
 
       List<Map<String, dynamic>> cartItems = [];
+      double totalPrice = 0.0;
 
       if (cartDoc.exists) {
         cartItems =
             List<Map<String, dynamic>>.from(cartDoc.data()?['items'] ?? []);
       }
 
-      // Find the index of the item in the cart using the 'name'
       final itemIndex =
           cartItems.indexWhere((item) => item['name'] == cartModel.name);
 
       if (itemIndex >= 0) {
-        // If the item exists, update only this specific item's quantity and price
-        int currentQuantity = int.parse(
-            cartItems[itemIndex]['quantity']); // Current quantity of the item
-        double currentPrice = double.parse(
-            cartItems[itemIndex]['price']); // Current price of the item
+        int currentQuantity = int.parse(cartItems[itemIndex]['quantity']);
+        double currentPrice = double.parse(cartItems[itemIndex]['price']);
 
-        // Increment quantity by 1 (or any other logic)
         currentQuantity += int.parse(cartModel.quantity.toString());
 
-        // Update the price based on the new quantity
         cartItems[itemIndex]['quantity'] = currentQuantity.toString();
         cartItems[itemIndex]['price'] =
-            (currentPrice * currentQuantity).toString();
+            (cartModel.price * currentQuantity).toString();
       } else {
-        // If the item is not in the cart, add it as a new item
         cartItems.add({
           'name': cartModel.name,
           'image': cartModel.imageUrl,
@@ -71,10 +65,15 @@ class ItemServiceImpl extends ItemService {
         });
       }
 
-      // Update the cart document with the modified cart items array
+      totalPrice = cartItems.fold(0.0, (sum, item) {
+        return sum +
+            (double.parse(item['price']) * int.parse(item['quantity']));
+      });
+
       await cartDocRef.set({
         'items': cartItems,
-        'updatedAt': Timestamp.now(), // Update timestamp
+        'total_price': totalPrice.toStringAsFixed(2),
+        'updatedAt': Timestamp.now(),
       });
 
       return const Right('Your item has been successfully added to cart');

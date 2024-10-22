@@ -1,0 +1,23 @@
+class InCartModel {
+  String id;
+  String category;
+  String description;
+  String imageUrl;
+  String itemLeft;
+  String name;
+  double price;
+  String rating;
+  String quantity;
+
+  InCartModel({
+    required this.id,
+    required this.category,
+    required this.quantity,
+    required this.description,
+    required this.imageUrl,
+    required this.itemLeft,
+    required this.name,
+    required this.price,
+    required this.rating,
+  });
+}
