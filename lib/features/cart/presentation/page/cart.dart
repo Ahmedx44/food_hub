@@ -4,7 +4,9 @@ import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
 import 'package:food_hub/features/cart/domain/usecase/get_all_cart.dart';
 import 'package:food_hub/features/cart/presentation/bloc/cart_cubit.dart';
 import 'package:food_hub/features/cart/presentation/bloc/cart_state.dart';
+import 'package:food_hub/features/cart/presentation/page/checkout_page.dart';
 import 'package:food_hub/features/cart/presentation/widget/cart_item_tile.dart';
+import 'package:food_hub/features/home/presentation/widegt/my_app_bar.dart';
 import 'package:food_hub/service_locator.dart';
 
 class CartScreen extends StatefulWidget {
@@ -23,10 +25,8 @@ class _CartScreenState extends State<CartScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: const Text(
-            "Cart",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+            'Cart',
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         body: BlocBuilder<CartCubit, CartState>(
@@ -103,7 +103,22 @@ class _CartScreenState extends State<CartScreen> {
                         ),
 
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            showBottomSheet(
+                              enableDrag: true,
+                              elevation: 0,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.tertiary,
+                              showDragHandle: true,
+                              sheetAnimationStyle: AnimationStyle(
+                                  curve: Curves.bounceInOut,
+                                  duration: const Duration(milliseconds: 500)),
+                              context: context,
+                              builder: (context) {
+                                return const CheckoutPage();
+                              },
+                            );
+                          },
                           child: Container(
                             padding: const EdgeInsets.all(20),
                             width: MediaQuery.of(context).size.width * 0.7,
@@ -123,6 +138,9 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01,
+                        )
                       ],
                     ),
                   );

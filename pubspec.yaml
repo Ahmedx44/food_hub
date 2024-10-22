@@ -56,6 +56,9 @@ dependencies:
   bloc: ^8.1.4
   shimmer: ^3.0.0
   flutter_rating_bar: ^4.0.1
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  url_launcher:
  
  
 

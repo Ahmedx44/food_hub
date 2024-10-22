@@ -6,11 +6,13 @@ import 'package:food_hub/features/auth/presentation/pages/auth_gate.dart';
 import 'package:food_hub/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:food_hub/features/auth/presentation/pages/login.dart';
 import 'package:food_hub/features/auth/presentation/pages/signup.dart';
+import 'package:food_hub/features/cart/presentation/page/map.dart';
 import 'package:food_hub/features/home/presentation/home.dart';
 import 'package:food_hub/features/home/presentation/page/detail_page.dart';
 import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:food_hub/firebase_options.dart';
 import 'package:food_hub/service_locator.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 
 void main() async {
@@ -64,6 +66,15 @@ final GoRouter _router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final item = state.extra as QueryDocumentSnapshot<Map<String, dynamic>>;
         return ItemDetail(item: item);
+      },
+    ),
+    GoRoute(
+      path: '/map',
+      builder: (BuildContext context, GoRouterState state) {
+        final location = state.extra as Position;
+        return MyMapp(
+          position: location,
+        );
       },
     ),
   ],

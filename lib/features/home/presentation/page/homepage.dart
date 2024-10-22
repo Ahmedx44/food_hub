@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.27,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: const [
@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisCount: 2),
                         itemCount: 4,
                         itemBuilder: (context, index) {
-                          return ShimmerSkeleton();
+                          return const ShimmerSkeleton();
                         },
                       );
                     } else if (state is HomeStateLoaded) {
@@ -212,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const SliverGridDelegateWithFixedCrossAxisCount(
                                   mainAxisSpacing: 2,
                                   crossAxisSpacing: 1,
-                                  childAspectRatio: 0.7,
+                                  childAspectRatio: 0.75,
                                   crossAxisCount: 2,
                                 ),
                                 itemBuilder: (context, index) {
@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       context.push('/itemdetail', extra: item);
                                     },
                                     child: SizedBox(
-                                      height: 400,
+                                      height: 200,
                                       child: Items(
                                         item: item,
                                       ),
