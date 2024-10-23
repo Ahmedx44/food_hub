@@ -18,6 +18,7 @@ class OrderConfirmPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const Divider(),
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.4,
           child: ListView.builder(
@@ -52,12 +53,13 @@ class OrderConfirmPage extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.02,
+          height: MediaQuery.of(context).size.height * 0.01,
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              const Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -87,7 +89,7 @@ class OrderConfirmPage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onTertiary),
+                        color: Theme.of(context).colorScheme.onSecondary),
                   ),
                 ),
               ),

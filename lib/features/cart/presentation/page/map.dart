@@ -32,41 +32,63 @@ class _MyMappState extends State<MyMapp> {
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
       ),
-      body: FlutterMap(
-        options: MapOptions(
-          initialCenter: _currentLocation,
-          initialZoom: 15.0,
-          onTap: (tapPosition, point) {
-            // Allow the user to change the marker position by tapping the map
-            setState(() {
-              _currentLocation = point;
-            });
-          },
-        ),
+      body: Stack(
         children: [
-          TileLayer(
-            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            userAgentPackageName: 'com.example.app',
-          ),
-          MarkerLayer(
-            markers: [
-              Marker(
-                point:
-                    LatLng(widget.position.latitude, widget.position.longitude),
-                width: 80,
-                height: 80,
-                child: Icon(Icons.place),
+          FlutterMap(
+            options: MapOptions(
+              initialCenter: _currentLocation,
+              initialZoom: 15.0,
+              onTap: (tapPosition, point) {
+                // Update the marker position on tap
+                setState(() {
+                  _currentLocation = point;
+                });
+              },
+            ),
+            children: [
+              TileLayer(
+                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                userAgentPackageName: 'com.example.app',
+              ),
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    point: _currentLocation,
+                    width: 80,
+                    height: 80,
+                    child: const Icon(
+                      Icons.place,
+                      color: Colors.red,
+                      size: 40,
+                    ),
+                  ),
+                ],
+              ),
+              RichAttributionWidget(
+                attributions: [
+                  TextSourceAttribution(
+                    'OpenStreetMap contributors',
+                    onTap: () => launchUrl(
+                        Uri.parse('https://openstreetmap.org/copyright')),
+                  ),
+                ],
               ),
             ],
           ),
-          RichAttributionWidget(
-            attributions: [
-              TextSourceAttribution(
-                'OpenStreetMap contributors',
-                onTap: () =>
-                    launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            child: ElevatedButton(
+              onPressed: () {
+                // Pass the new location back and pop the map screen
+                Navigator.pop(context, _currentLocation);
+              },
+              child: const Text(
+                'Confirm Location',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            ],
+            ),
           ),
         ],
       ),
