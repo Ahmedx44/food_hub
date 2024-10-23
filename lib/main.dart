@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:food_hub/core/common/const.dart';
 import 'package:food_hub/core/theme/theme.dart';
 import 'package:food_hub/features/auth/presentation/pages/auth_gate.dart';
 import 'package:food_hub/features/auth/presentation/pages/forget_password_page.dart';
@@ -18,9 +20,10 @@ import 'package:go_router/go_router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  Stripe.publishableKey = StripeKey.stripePublishableKey;
   await initializedDependency();
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 final GoRouter _router = GoRouter(
@@ -81,7 +84,7 @@ final GoRouter _router = GoRouter(
 );
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

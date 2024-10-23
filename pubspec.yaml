@@ -60,6 +60,9 @@ dependencies:
   latlong2: ^0.9.1
   url_launcher:
   easy_stepper: ^0.8.5+1
+  flutter_stripe: ^11.2.0
+  http: ^1.2.2
+  dio: ^5.7.0
  
  
 
