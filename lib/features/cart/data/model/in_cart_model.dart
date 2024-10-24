@@ -22,4 +22,20 @@ class InCartModel {
     required this.price,
     required this.rating,
   });
+
+  // Convert InCartModel to a map for Firestore
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'originalprice': originalprice,
+      'category': category,
+      'quantity': quantity,
+      'description': description,
+      'imageUrl': imageUrl,
+      'itemLeft': itemLeft,
+      'name': name,
+      'price': price,
+      'rating': rating,
+    };
+  }
 }

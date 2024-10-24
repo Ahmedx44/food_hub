@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:food_hub/core/common/const.dart';
 import 'package:food_hub/core/theme/theme.dart';
@@ -8,6 +9,7 @@ import 'package:food_hub/features/auth/presentation/pages/auth_gate.dart';
 import 'package:food_hub/features/auth/presentation/pages/forget_password_page.dart';
 import 'package:food_hub/features/auth/presentation/pages/login.dart';
 import 'package:food_hub/features/auth/presentation/pages/signup.dart';
+import 'package:food_hub/features/cart/presentation/bloc/payment_cubit/payment_cubit.dart';
 import 'package:food_hub/features/cart/presentation/page/map.dart';
 import 'package:food_hub/features/home/presentation/home.dart';
 import 'package:food_hub/features/home/presentation/page/detail_page.dart';
@@ -88,11 +90,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _router,
-      debugShowCheckedModeBanner: false,
-      theme: lightMode,
-      darkTheme: darkMode,
+    return BlocProvider(
+      create: (context) => PaymentCubit(),
+      child: MaterialApp.router(
+        routerConfig: _router,
+        debugShowCheckedModeBanner: false,
+        theme: lightMode,
+        darkTheme: darkMode,
+      ),
     );
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -262,8 +260,17 @@ class _ShippingPageState extends State<ShippingPage> {
               : () async {
                   // Call the payment use case
                   final paymentResult = await sl<MakePaymentUsecase>().call(
-                    PaymentModel(amount: widget.totalPrice, currency: 'usd'),
-                  );
+                      PaymentModel(amount: 10, currency: 'usd'),
+                      OrderModel(
+                          amount: widget.totalPrice,
+                          addressDescription: _additionalInfoController.text,
+                          location: location!,
+                          item: widget.cartItems,
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          paymentStatus: 'Succesfful',
+                          orderStatus: 'Pending',
+                          userName:
+                              FirebaseAuth.instance.currentUser!.displayName));
 
                   // Handle payment result
                   paymentResult.fold(
@@ -278,39 +285,7 @@ class _ShippingPageState extends State<ShippingPage> {
                       duration: const Duration(seconds: 4),
                       curve: Curves.easeInOut,
                     ),
-                    (paymentSuccess) async {
-                      final orderResult = await context
-                          .read<PaymentCubit>()
-                          .makeOrder(OrderModel(
-                            amount: widget.totalPrice,
-                            addressDescription: _additionalInfoController.text,
-                            location: location!,
-                            item: widget.cartItems,
-                            userId: FirebaseAuth.instance.currentUser!.uid,
-                            paymentStatus: 'Paid',
-                            orderStatus: 'Pending',
-                            userName: FirebaseAuth.instance.currentUser!.uid,
-                          ));
-
-                      // Handle the order result with fold
-                      orderResult.fold(
-                        (orderError) {
-                          // Show error if order creation fails
-                          showToast(
-                            orderError,
-                            backgroundColor: Colors.redAccent,
-                            context: context,
-                            animation: StyledToastAnimation.slideToTop,
-                            reverseAnimation: StyledToastAnimation.fade,
-                            position: StyledToastPosition.top,
-                            animDuration: const Duration(seconds: 1),
-                            duration: const Duration(seconds: 4),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                        (orderSuccess) {},
-                      );
-                    },
+                    (paymentSuccess) async {},
                   );
                 },
           child: Container(

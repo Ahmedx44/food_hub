@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
 import 'package:food_hub/features/cart/presentation/page/ordeR_confirm_page.dart';
 import 'package:food_hub/features/cart/presentation/page/shipping_page.dart';
+import 'package:food_hub/features/cart/presentation/page/success_page.dart';
 
 class CheckoutPage extends StatefulWidget {
   final double totalPrice;
@@ -35,6 +36,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
         totalPrice: widget.totalPrice,
         onNext: goToNextStep,
       ),
+      SuccessPage()
     ];
   }
 

@@ -5,7 +5,7 @@ import 'package:food_hub/features/cart/presentation/bloc/payment_cubit/payment_s
 import 'package:food_hub/service_locator.dart';
 
 class PaymentCubit extends Cubit<PaymentState> {
-  PaymentCubit(super.initialState);
+  PaymentCubit() : super(PaymentStateIntial());
 
   Future makeOrder(OrderModel orderModel) async {
     emit(PaymentStateLoading());
