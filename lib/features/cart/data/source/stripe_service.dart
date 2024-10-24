@@ -7,14 +7,14 @@ import 'package:food_hub/features/cart/data/model/payment_model.dart';
 
 abstract class StripeService {
   Future<Either<String, dynamic>> createPaymentIntent(
-      int amount, String currency);
+      double amount, String currency);
   Future<Either<String, dynamic>> makePayment(PaymentModel paymentModel);
 }
 
 class StripeServiceImpl extends StripeService {
   @override
   Future<Either<String, dynamic>> createPaymentIntent(
-      int amount, String currency) async {
+      double amount, String currency) async {
     try {
       final Dio dio = Dio();
       Map<String, dynamic> data = {

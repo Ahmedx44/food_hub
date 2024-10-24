@@ -2,7 +2,6 @@ import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
 import 'package:food_hub/features/cart/presentation/page/ordeR_confirm_page.dart';
-import 'package:food_hub/features/cart/presentation/page/payment_page.dart';
 import 'package:food_hub/features/cart/presentation/page/shipping_page.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -31,8 +30,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
         totalPrice: widget.totalPrice,
         onNext: goToNextStep,
       ),
-      ShippingPage(),
-      PaymentPage(),
+      ShippingPage(
+        cartItems: widget.cartItems,
+        totalPrice: widget.totalPrice,
+        onNext: goToNextStep,
+      ),
     ];
   }
 

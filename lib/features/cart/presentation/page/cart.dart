@@ -29,7 +29,7 @@ class _CartScreenState extends State<CartScreen> {
               );
             } else if (state is CartStateLoaded) {
               return StreamBuilder<List<InCartModel>>(
-                stream: state.cartItem, // Listening to the stream
+                stream: state.cartItem,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(

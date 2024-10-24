@@ -7,7 +7,7 @@ import 'package:food_hub/service_locator.dart';
 class StripeRespositoryImpl extends StripeRepository {
   @override
   Future<Either<String, dynamic>> createPaymentIntent(
-      int amount, String currency) async {
+      double amount, String currency) async {
     return sl<StripeService>().createPaymentIntent(amount, currency);
   }
 

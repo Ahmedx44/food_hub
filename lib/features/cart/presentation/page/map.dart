@@ -39,7 +39,7 @@ class _MyMappState extends State<MyMapp> {
               initialCenter: _currentLocation,
               initialZoom: 15.0,
               onTap: (tapPosition, point) {
-                // Update the marker position on tap
+                // Update the marker position on map tap
                 setState(() {
                   _currentLocation = point;
                 });
@@ -69,7 +69,8 @@ class _MyMappState extends State<MyMapp> {
                   TextSourceAttribution(
                     'OpenStreetMap contributors',
                     onTap: () => launchUrl(
-                        Uri.parse('https://openstreetmap.org/copyright')),
+                      Uri.parse('https://openstreetmap.org/copyright'),
+                    ),
                   ),
                 ],
               ),
@@ -81,13 +82,15 @@ class _MyMappState extends State<MyMapp> {
             right: 20,
             child: ElevatedButton(
               onPressed: () {
-                // Pass the new location back and pop the map screen
+                // Pass the new location back to the previous screen
                 Navigator.pop(context, _currentLocation);
               },
-              child: const Text(
-                'Confirm Location',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                textStyle:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              child: const Text('Confirm Location'),
             ),
           ),
         ],
