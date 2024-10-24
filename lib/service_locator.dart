@@ -10,6 +10,7 @@ import 'package:food_hub/features/cart/data/source/cart_service.dart';
 import 'package:food_hub/features/cart/data/source/stripe_service.dart';
 import 'package:food_hub/features/cart/domain/repository/stripe_repository.dart';
 import 'package:food_hub/features/cart/domain/usecase/get_all_cart.dart';
+import 'package:food_hub/features/cart/domain/usecase/make_order_usecase.dart';
 import 'package:food_hub/features/cart/domain/usecase/make_payment_usecase.dart';
 import 'package:food_hub/features/cart/domain/usecase/remove_item.dart';
 import 'package:food_hub/features/cart/domain/usecase/update_quantity_usecase.dart';
@@ -81,6 +82,10 @@ Future<void> initializedDependency() async {
   );
   sl.registerSingleton<MakePaymentUsecase>(
     MakePaymentUsecase(),
+  );
+
+  sl.registerSingleton<MakeOrderUsecase>(
+    MakeOrderUsecase(),
   );
 
   //Implementation

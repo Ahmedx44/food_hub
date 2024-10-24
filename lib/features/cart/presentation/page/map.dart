@@ -13,12 +13,12 @@ class MyMapp extends StatefulWidget {
 }
 
 class _MyMappState extends State<MyMapp> {
-  late LatLng _currentLocation; // Track the current marker location
+  late LatLng _currentLocation;
 
   @override
   void initState() {
     super.initState();
-    // Set initial marker location to the user's current position
+
     _currentLocation =
         LatLng(widget.position.latitude, widget.position.longitude);
   }
