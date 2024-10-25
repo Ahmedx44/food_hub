@@ -22,20 +22,16 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       backgroundColor: Colors.transparent, // Make AppBar transparent
       flexibleSpace: ClipRRect(
-        borderRadius:
-            BorderRadius.circular(20), // Rounded corners for glass effect
         child: BackdropFilter(
           filter: ImageFilter.blur(
               sigmaX: 20.0, sigmaY: 20.0), // Increased blur for glassmorphism
           child: Container(
             decoration: BoxDecoration(
-              color:
-                  Colors.white.withOpacity(0.2), // Add opacity for glass effect
-              borderRadius: BorderRadius.circular(20),
+              color: Colors.white.withOpacity(0.1),
               border: Border.all(
                 color:
                     Colors.white.withOpacity(0.3), // Slight border for outline
-                width: 1.5,
+                width: 0.1,
               ),
             ),
             child: Padding(

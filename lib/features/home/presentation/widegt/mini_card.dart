@@ -17,12 +17,12 @@ class MiniCards extends StatelessWidget {
       height: 150,
       width: MediaQuery.of(context).size.width * 0.39,
       decoration: BoxDecoration(
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Colors.black12,
+              color: Theme.of(context).colorScheme.outlineVariant,
               blurRadius: 10,
               spreadRadius: 2,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
           borderRadius: BorderRadius.circular(10),

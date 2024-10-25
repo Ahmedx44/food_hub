@@ -5,7 +5,7 @@ import 'dart:ui'; // For BackdropFilter
 
 import 'package:food_hub/features/cart/presentation/page/cart.dart';
 import 'package:food_hub/features/home/presentation/page/homepage.dart';
-import 'package:food_hub/features/order/presentation/order.dart';
+import 'package:food_hub/features/order/presentation/pages/order.dart';
 import 'package:food_hub/features/profile/presentation/profile.dart';
 import 'package:food_hub/features/search/presentation/search.dart';
 
@@ -51,18 +51,15 @@ class _HomeState extends State<Home> {
               topLeft: Radius.circular(24), topRight: Radius.circular(24))),
       child: ClipRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(
-              sigmaX: 50.0, sigmaY: 50.0), // Frosted glass blur effect
+          filter: ImageFilter.blur(sigmaX: 50.0, sigmaY: 50.0),
           child: Container(
             decoration: BoxDecoration(
               color:
-                  Colors.white.withOpacity(0.2), // Transparent white background
-              borderRadius: BorderRadius.circular(
-                  24), // Rounded edges for the floating effect
+                  Colors.white.withOpacity(0.1), // Transparent white background
+
               border: Border.all(
-                color: Colors.white
-                    .withOpacity(0.1), // Light border for extra depth
-                width: 1.5,
+                color: Colors.white.withOpacity(0.1),
+                width: 0.1,
               ),
             ),
             child: BottomBarFloating(

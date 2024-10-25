@@ -23,12 +23,12 @@ class _ItemsState extends State<Items> {
       padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.005),
       margin: EdgeInsets.all(MediaQuery.of(context).size.height * 0.005),
       decoration: BoxDecoration(
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
+            color: Theme.of(context).colorScheme.outlineVariant,
+            blurRadius: 5,
             spreadRadius: 2,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
         color: Theme.of(context).colorScheme.onTertiary,

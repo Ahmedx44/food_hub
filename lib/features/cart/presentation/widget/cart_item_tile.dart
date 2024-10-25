@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/widgets.dart';
 import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
 import 'package:food_hub/features/cart/domain/usecase/remove_item.dart';
 import 'package:food_hub/service_locator.dart';
+import 'package:go_router/go_router.dart';
 
 class CartItemTile extends StatefulWidget {
   final InCartModel item;
@@ -39,12 +41,12 @@ class _CartItemTileState extends State<CartItemTile> {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onTertiary,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Colors.black12,
+              color: Theme.of(context).colorScheme.outlineVariant,
               blurRadius: 10,
               spreadRadius: 2,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -139,12 +141,12 @@ class _CartItemTileState extends State<CartItemTile> {
                               ),
                               child: BackdropFilter(
                                 filter: ImageFilter.blur(
-                                  sigmaX: 10.0,
-                                  sigmaY: 10.0,
+                                  sigmaX: 20.0,
+                                  sigmaY: 20.0,
                                 ),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.2),
+                                    color: Colors.white.withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Column(
@@ -163,19 +165,90 @@ class _CartItemTileState extends State<CartItemTile> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context)
-                                                  .pop(true); // Confirm
+                                          GestureDetector(
+                                            onTap: () async {
+                                              Navigator.of(context).pop(true);
+                                              final response =
+                                                  await sl<RemoveItem>()
+                                                      .call(widget.item.name);
+                                              response.fold((ifLeft) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                        backgroundColor:
+                                                            Colors.green,
+                                                        content: Text(ifLeft)));
+                                              }, (ifRight) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                        backgroundColor:
+                                                            Colors.green,
+                                                        content: Text(ifRight
+                                                            .toString())));
+                                              });
                                             },
-                                            child: const Text('Yes'),
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.15,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.05,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.red),
+                                              child: Center(
+                                                child: Text(
+                                                  'Yes',
+                                                  style: TextStyle(
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onTertiary),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                          ElevatedButton(
-                                            onPressed: () {
-                                              Navigator.of(context)
-                                                  .pop(false); // Cancel
+                                          GestureDetector(
+                                            onTap: () {
+                                              context.pop();
                                             },
-                                            child: const Text('No'),
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.15,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.05,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: Colors.red),
+                                              child: Center(
+                                                child: Text(
+                                                  'No',
+                                                  style: TextStyle(
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .onTertiary),
+                                                ),
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -187,24 +260,6 @@ class _CartItemTileState extends State<CartItemTile> {
                           );
                         },
                       );
-
-                      // Handle the result of the dialog here
-                      if (result == true) {
-                        // Proceed with the remove item action
-                        final response =
-                            await sl<RemoveItem>().call(widget.item.name);
-                        response.fold((ifLeft) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              duration: const Duration(seconds: 1),
-                              backgroundColor: Colors.green,
-                              content: Text(ifLeft)));
-                        }, (ifRight) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              duration: const Duration(seconds: 1),
-                              backgroundColor: Colors.green,
-                              content: Text(ifRight.toString())));
-                        });
-                      }
                     },
                     icon: const Icon(Icons.cancel),
                   ),
@@ -225,18 +280,3 @@ class _CartItemTileState extends State<CartItemTile> {
     );
   }
 }
-
-// final result =
-//                           await sl<RemoveItem>().call(widget.item.name);
-
-//                       result.fold((ifLeft) {
-//                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//                             duration: const Duration(seconds: 1),
-//                             backgroundColor: Colors.green,
-//                             content: Text(ifLeft)));
-//                       }, (ifRight) {
-//                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//                             duration: const Duration(seconds: 1),
-//                             backgroundColor: Colors.green,
-//                             content: Text(ifRight.toString())));
-//                       });

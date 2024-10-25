@@ -21,6 +21,10 @@ import 'package:food_hub/features/home/data/source/location_service.dart';
 import 'package:food_hub/features/home/domain/usecase/add_to_cart_usecase.dart';
 import 'package:food_hub/features/home/domain/usecase/get_item_usecase.dart';
 import 'package:food_hub/features/home/domain/usecase/get_location_usecase.dart';
+import 'package:food_hub/features/order/data/repository/order_repository_impl.dart';
+import 'package:food_hub/features/order/data/source/order_service.dart';
+import 'package:food_hub/features/order/domain/repository/order_resporiotry.dart';
+import 'package:food_hub/features/order/domain/usecase/get_user_orders.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -42,6 +46,8 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<StripeService>(
     StripeServiceImpl(),
   );
+
+  sl.registerSingleton<OrderService>(OrderServiceImpl());
 
   //UseCase
   sl.registerSingleton<SigninWithGoogle>(
@@ -88,6 +94,8 @@ Future<void> initializedDependency() async {
     MakeOrderUsecase(),
   );
 
+  sl.registerSingleton<GetUserOrdersUseCase>(GetUserOrdersUseCase());
+
   //Implementation
   sl.registerSingleton<LocationRepositoyImpl>(
     LocationRepositoyImpl(),
@@ -98,5 +106,8 @@ Future<void> initializedDependency() async {
   );
   sl.registerSingleton<CartRepositoryImpl>(
     CartRepositoryImpl(),
+  );
+  sl.registerSingleton<OrderResporiotry>(
+    OrderRepositoryImpl(),
   );
 }
