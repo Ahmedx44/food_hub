@@ -102,7 +102,6 @@ class _CartScreenState extends State<CartScreen> {
                             showBottomSheet(
                               enableDrag: true,
                               elevation: 0,
-                              showDragHandle: true,
                               sheetAnimationStyle: AnimationStyle(
                                   curve: Curves.bounceInOut,
                                   duration: const Duration(milliseconds: 500)),

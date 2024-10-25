@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
@@ -30,13 +31,22 @@ class _CartItemTileState extends State<CartItemTile> {
   @override
   Widget build(BuildContext context) {
     final total_price = widget.item.price;
-    print(widget.item.price);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
+        margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.onTertiary,
           borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.onSecondaryContainer,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(5.0),
@@ -69,7 +79,6 @@ class _CartItemTileState extends State<CartItemTile> {
                         children: [
                           IconButton(
                             onPressed: () {
-                              print(widget.item.itemLeft.toString());
                               setState(() {
                                 if (quantity <
                                     int.parse(widget.item.itemLeft)) {
@@ -110,27 +119,92 @@ class _CartItemTileState extends State<CartItemTile> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
                 ],
               ),
               Column(
                 children: [
                   IconButton(
                     onPressed: () async {
-                      final result =
-                          await sl<RemoveItem>().call(widget.item.name);
+                      // Show confirmation dialog
+                      bool? result = await showDialog<bool>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Center(
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.transparent,
+                              ),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: 10.0,
+                                  sigmaY: 10.0,
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Remove from cart?',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context)
+                                                  .pop(true); // Confirm
+                                            },
+                                            child: const Text('Yes'),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.of(context)
+                                                  .pop(false); // Cancel
+                                            },
+                                            child: const Text('No'),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
 
-                      result.fold((ifLeft) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            duration: const Duration(seconds: 1),
-                            backgroundColor: Colors.green,
-                            content: Text(ifLeft)));
-                      }, (ifRight) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            duration: const Duration(seconds: 1),
-                            backgroundColor: Colors.green,
-                            content: Text(ifRight.toString())));
-                      });
+                      // Handle the result of the dialog here
+                      if (result == true) {
+                        // Proceed with the remove item action
+                        final response =
+                            await sl<RemoveItem>().call(widget.item.name);
+                        response.fold((ifLeft) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              duration: const Duration(seconds: 1),
+                              backgroundColor: Colors.green,
+                              content: Text(ifLeft)));
+                        }, (ifRight) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              duration: const Duration(seconds: 1),
+                              backgroundColor: Colors.green,
+                              content: Text(ifRight.toString())));
+                        });
+                      }
                     },
                     icon: const Icon(Icons.cancel),
                   ),
@@ -141,7 +215,7 @@ class _CartItemTileState extends State<CartItemTile> {
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
-                  )
+                  ),
                 ],
               ),
             ],
@@ -151,3 +225,18 @@ class _CartItemTileState extends State<CartItemTile> {
     );
   }
 }
+
+// final result =
+//                           await sl<RemoveItem>().call(widget.item.name);
+
+//                       result.fold((ifLeft) {
+//                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//                             duration: const Duration(seconds: 1),
+//                             backgroundColor: Colors.green,
+//                             content: Text(ifLeft)));
+//                       }, (ifRight) {
+//                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//                             duration: const Duration(seconds: 1),
+//                             backgroundColor: Colors.green,
+//                             content: Text(ifRight.toString())));
+//                       });

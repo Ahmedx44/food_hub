@@ -1,7 +1,5 @@
-import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:food_hub/core/assets/app_flare.dart';
-import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 class SuccessPage extends StatefulWidget {
   const SuccessPage({super.key});
@@ -14,8 +12,12 @@ class _SuccessPageState extends State<SuccessPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2)).then((_) {
-      context.pushReplacement('/home');
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2)).then((_) {
+        if (mounted) {
+          Navigator.of(context).popAndPushNamed('/home');
+        }
+      });
     });
   }
 
@@ -23,10 +25,17 @@ class _SuccessPageState extends State<SuccessPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: FlareActor(
-          AppFlare.success,
-          animation: 'success',
-          fit: BoxFit.contain,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 350,
+              child: Lottie.asset('assets/lottie/success.json'),
+            ),
+            const Text(
+              'Order Succesfully Completed',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            )
+          ],
         ),
       ),
     );

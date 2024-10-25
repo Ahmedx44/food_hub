@@ -55,6 +55,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
+            const Center(
+                child: Icon(Icons.keyboard_double_arrow_down_outlined)),
             const Padding(
               padding: EdgeInsets.all(15.0),
               child: Text(
@@ -66,6 +71,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
             ),
             EasyStepper(
+              enableStepTapping: false,
               fitWidth: true,
               activeStep: _activeStep,
               steps: const [

@@ -32,7 +32,7 @@ class ShippingPage extends StatefulWidget {
 }
 
 class _ShippingPageState extends State<ShippingPage> {
-  Position? location;
+  late Position location;
   List<Placemark>? place;
   bool isLoading = true;
   String? errorMessage;
@@ -258,19 +258,30 @@ class _ShippingPageState extends State<ShippingPage> {
           onTap: isLoading
               ? null
               : () async {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
                   // Call the payment use case
                   final paymentResult = await sl<MakePaymentUsecase>().call(
-                      PaymentModel(amount: 10, currency: 'usd'),
+                      PaymentModel(
+                          amount: widget.totalPrice.toInt(), currency: 'usd'),
                       OrderModel(
                           amount: widget.totalPrice,
                           addressDescription: _additionalInfoController.text,
-                          location: location!,
+                          location: location,
                           item: widget.cartItems,
                           userId: FirebaseAuth.instance.currentUser!.uid,
                           paymentStatus: 'Succesfful',
                           orderStatus: 'Pending',
                           userName:
                               FirebaseAuth.instance.currentUser!.displayName));
+
+                  context.pop();
 
                   // Handle payment result
                   paymentResult.fold(
@@ -285,7 +296,9 @@ class _ShippingPageState extends State<ShippingPage> {
                       duration: const Duration(seconds: 4),
                       curve: Curves.easeInOut,
                     ),
-                    (paymentSuccess) async {},
+                    (paymentSuccess) async {
+                      widget.onNext();
+                    },
                   );
                 },
           child: Container(

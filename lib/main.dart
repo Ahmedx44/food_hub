@@ -11,6 +11,7 @@ import 'package:food_hub/features/auth/presentation/pages/login.dart';
 import 'package:food_hub/features/auth/presentation/pages/signup.dart';
 import 'package:food_hub/features/cart/presentation/bloc/payment_cubit/payment_cubit.dart';
 import 'package:food_hub/features/cart/presentation/page/map.dart';
+import 'package:food_hub/features/cart/presentation/page/success_page.dart';
 import 'package:food_hub/features/home/presentation/home.dart';
 import 'package:food_hub/features/home/presentation/page/detail_page.dart';
 import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart';
