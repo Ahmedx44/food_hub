@@ -41,59 +41,88 @@ class OrderScreen extends StatelessWidget {
 
                 final orders = snapshot.data!.docs;
 
-                return ListView.builder(
-                  itemCount: orders.length,
-                  itemBuilder: (context, index) {
-                    final orderData = orders[index].data();
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: orders.length,
+                        itemBuilder: (context, index) {
+                          final orderData = orders[index].data();
 
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.onTertiary,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                                  Theme.of(context).colorScheme.outlineVariant,
-                              blurRadius: 10,
-                              spreadRadius: 2,
-                              offset: const Offset(0, 2),
-                            ),
-                          ]),
-                      child: GestureDetector(
-                        onTap: () {
-                          context.push('/order_detail', extra: orderData);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.onTertiary,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: ListTile(
-                            title: Text("Order ID: ${orders[index].id}"),
-                            subtitle: Row(
-                              children: [
-                                const Text(
-                                  "Order Total: ",
-                                  style: TextStyle(),
+                          return Container(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.tertiary,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onTertiaryContainer,
+                                    blurRadius: 10,
+                                    spreadRadius: 2,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ]),
+                            child: GestureDetector(
+                              onTap: () {
+                                context.push('/order_detail', extra: orderData);
+                              },
+                              child: ListTile(
+                                title: Row(
+                                  children: [
+                                    Text(
+                                      'Order ID: ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary),
+                                    ),
+                                    Text(
+                                      '${orders[index].id}',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary),
+                                    )
+                                  ],
                                 ),
-                                Text(
-                                  '\$${orderData['amount']}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary),
-                                )
-                              ],
+                                subtitle: Row(
+                                  children: [
+                                    Text(
+                                      "Order Total: ",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSecondary),
+                                    ),
+                                    Text(
+                                      '\$${orderData['amount']}',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                    )
+                                  ],
+                                ),
+                                trailing:
+                                    Text("Status: ${orderData['orderStatus']}"),
+                              ),
                             ),
-                            trailing:
-                                Text("Status: ${orderData['orderStatus']}"),
-                          ),
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 );
               },
             );

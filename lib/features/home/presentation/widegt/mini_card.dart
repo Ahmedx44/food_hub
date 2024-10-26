@@ -19,14 +19,14 @@ class MiniCards extends StatelessWidget {
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.outlineVariant,
-              blurRadius: 10,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
+              blurRadius: 5,
               spreadRadius: 2,
               offset: const Offset(0, 2),
             ),
           ],
           borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.onTertiary),
+          color: Theme.of(context).colorScheme.tertiary),
       child: Column(
         children: [
           ExtendedImage.network(

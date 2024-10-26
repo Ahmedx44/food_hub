@@ -25,13 +25,13 @@ class _ItemsState extends State<Items> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.outlineVariant,
-            blurRadius: 5,
+            color: Theme.of(context).colorScheme.onTertiaryContainer,
+            blurRadius: 2,
             spreadRadius: 2,
             offset: const Offset(0, 2),
           ),
         ],
-        color: Theme.of(context).colorScheme.onTertiary,
+        color: Theme.of(context).colorScheme.tertiary,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

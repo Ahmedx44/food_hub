@@ -59,7 +59,8 @@ class OrderDetail extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final item = items[index];
                   return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                     decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.onTertiary,
                         borderRadius: BorderRadius.circular(10),

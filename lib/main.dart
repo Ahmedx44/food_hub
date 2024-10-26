@@ -15,6 +15,7 @@ import 'package:food_hub/features/home/presentation/home.dart';
 import 'package:food_hub/features/home/presentation/page/detail_page.dart';
 import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:food_hub/features/order/presentation/pages/order_detail.dart';
+import 'package:food_hub/features/search/presentation/search.dart';
 import 'package:food_hub/firebase_options.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:geolocator/geolocator.dart';
@@ -53,6 +54,12 @@ final GoRouter _router = GoRouter(
       path: '/signup',
       builder: (BuildContext context, GoRouterState state) {
         return const SignupPage();
+      },
+    ),
+    GoRoute(
+      path: '/search',
+      builder: (BuildContext context, GoRouterState state) {
+        return const SearchScreen();
       },
     ),
     GoRoute(

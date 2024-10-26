@@ -37,13 +37,13 @@ class _CartItemTileState extends State<CartItemTile> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onTertiary,
+          color: Theme.of(context).colorScheme.tertiary,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.outlineVariant,
+              color: Theme.of(context).colorScheme.onTertiaryContainer,
               blurRadius: 10,
               spreadRadius: 2,
               offset: const Offset(0, 2),

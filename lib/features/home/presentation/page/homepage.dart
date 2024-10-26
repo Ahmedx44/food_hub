@@ -89,41 +89,50 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.05),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.search),
-                            hintText: 'Search for food',
-                            fillColor: Theme.of(context)
-                                .colorScheme
-                                .onSecondaryContainer,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              borderRadius: BorderRadius.circular(10),
+                  child: GestureDetector(
+                    onTap: () {
+                      context.go('/search');
+                    },
+                    child: Hero(
+                      tag: 1,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.search),
+                                hintText: 'Search for food',
+                                fillColor: Theme.of(context)
+                                    .colorScheme
+                                    .onSecondaryContainer,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: MediaQuery.of(context).size.width * 0.06),
-                      GestureDetector(
-                        onTap: () {
-                          FirebaseAuth.instance.signOut();
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context).colorScheme.primary),
-                          child: Icon(
-                            Icons.tune,
-                            color: Theme.of(context).colorScheme.onPrimary,
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.06),
+                          GestureDetector(
+                            onTap: () {
+                              FirebaseAuth.instance.signOut();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Theme.of(context).colorScheme.primary),
+                              child: Icon(
+                                Icons.tune,
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -227,7 +236,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onTap: () {
                                       context.push('/itemdetail', extra: item);
                                     },
-                                    child: SizedBox(
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 5),
                                       height: 200,
                                       child: Items(
                                         item: item,
