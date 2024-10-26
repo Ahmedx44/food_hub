@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _carousel(),
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: MediaQuery.of(context).size.width * 0.01),
+                      horizontal: MediaQuery.of(context).size.width * 0.05),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

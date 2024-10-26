@@ -26,7 +26,7 @@ class _ItemsState extends State<Items> {
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).colorScheme.onTertiaryContainer,
-            blurRadius: 2,
+            blurRadius: 10,
             spreadRadius: 2,
             offset: const Offset(0, 2),
           ),

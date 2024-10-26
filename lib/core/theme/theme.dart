@@ -13,7 +13,7 @@ final ThemeData lightMode = ThemeData(
       onSecondary: Colors.black,
       onTertiary: Colors.white,
       tertiary: const Color.fromARGB(255, 243, 243, 243),
-      onTertiaryContainer: Color.fromARGB(255, 209, 209, 209)),
+      onTertiaryContainer: Color.fromARGB(255, 226, 226, 226)),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.black),
     bodyMedium: TextStyle(color: Colors.black),

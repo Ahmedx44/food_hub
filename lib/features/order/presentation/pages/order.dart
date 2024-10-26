@@ -52,26 +52,26 @@ class OrderScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final orderData = orders[index].data();
 
-                          return Container(
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.tertiary,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onTertiaryContainer,
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ]),
-                            child: GestureDetector(
-                              onTap: () {
-                                context.push('/order_detail', extra: orderData);
-                              },
+                          return GestureDetector(
+                            onTap: () {
+                              context.push('/order_detail', extra: orderData);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onTertiaryContainer,
+                                      blurRadius: 10,
+                                      spreadRadius: 2,
+                                      offset: const Offset(0, 2),
+                                    ),
+                                  ]),
                               child: ListTile(
                                 title: Row(
                                   children: [

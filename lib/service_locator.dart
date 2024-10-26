@@ -25,29 +25,23 @@ import 'package:food_hub/features/order/data/repository/order_repository_impl.da
 import 'package:food_hub/features/order/data/source/order_service.dart';
 import 'package:food_hub/features/order/domain/repository/order_resporiotry.dart';
 import 'package:food_hub/features/order/domain/usecase/get_user_orders.dart';
+import 'package:food_hub/features/profile/data/repository/user_repository_impl.dart';
+import 'package:food_hub/features/profile/data/source/user_Service.dart';
+import 'package:food_hub/features/profile/domain/repository/user_repository.dart';
+import 'package:food_hub/features/profile/domain/usecase/get_user_info_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initializedDependency() async {
   //Service
-  sl.registerSingleton<AuthService>(
-    AuthServiceImpl(),
-  );
-  sl.registerSingleton<LocationService>(
-    LocationServiceImpl(),
-  );
-  sl.registerSingleton<ItemService>(
-    ItemServiceImpl(),
-  );
-  sl.registerSingleton<CartService>(
-    CartServiceImpl(),
-  );
-  sl.registerSingleton<StripeService>(
-    StripeServiceImpl(),
-  );
-
+  sl.registerSingleton<AuthService>(AuthServiceImpl());
+  sl.registerSingleton<LocationService>(LocationServiceImpl());
+  sl.registerSingleton<ItemService>(ItemServiceImpl());
+  sl.registerSingleton<CartService>(CartServiceImpl());
+  sl.registerSingleton<StripeService>(StripeServiceImpl());
   sl.registerSingleton<OrderService>(OrderServiceImpl());
+  sl.registerSingleton<UserService>(UserServiceImpl());
 
   //UseCase
   sl.registerSingleton<SigninWithGoogle>(
@@ -94,7 +88,13 @@ Future<void> initializedDependency() async {
     MakeOrderUsecase(),
   );
 
-  sl.registerSingleton<GetUserOrdersUseCase>(GetUserOrdersUseCase());
+  sl.registerSingleton<GetUserOrdersUseCase>(
+    GetUserOrdersUseCase(),
+  );
+
+  sl.registerSingleton<GetUserInfoUsecase>(
+    GetUserInfoUsecase(),
+  );
 
   //Implementation
   sl.registerSingleton<LocationRepositoyImpl>(
@@ -109,5 +109,8 @@ Future<void> initializedDependency() async {
   );
   sl.registerSingleton<OrderResporiotry>(
     OrderRepositoryImpl(),
+  );
+  sl.registerSingleton<UserRepository>(
+    UserRepositoryImpl(),
   );
 }
