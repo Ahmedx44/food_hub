@@ -3,6 +3,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:food_hub/core/assets/app_image.dart';
 import 'package:food_hub/features/auth/data/model/sigin_model.dart';
 import 'package:food_hub/features/auth/domain/usecase/sigin_usecase.dart';
+import 'package:food_hub/features/auth/domain/usecase/signin_with_google.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:go_router/go_router.dart';
 
@@ -190,21 +191,55 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Theme.of(context).colorScheme.secondary),
-                      padding: const EdgeInsets.all(5),
-                      child: Image.asset(height: 50, AppImage.apple)),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.05,
                   ),
-                  Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Theme.of(context).colorScheme.secondary),
-                      child: Image.asset(height: 50, AppImage.google)),
+                  GestureDetector(
+                    onTap: () async {
+                      showDialog(
+                        context: context,
+                        builder: (context) =>
+                            const Center(child: CircularProgressIndicator()),
+                      );
+                      final result = await sl<SigninWithGoogle>().call();
+                      result.fold((ifLeft) {
+                        Navigator.pop(context);
+                        showToast(
+                          ifLeft,
+                          backgroundColor: Colors.red,
+                          context: context,
+                          animation: StyledToastAnimation.slideToTop,
+                          reverseAnimation: StyledToastAnimation.fade,
+                          position: StyledToastPosition.top,
+                          animDuration: const Duration(seconds: 1),
+                          duration: const Duration(seconds: 4),
+                          curve: Curves.elasticOut,
+                          reverseCurve: Curves.linear,
+                        );
+                      }, (ifRight) {
+                        Navigator.pop(context);
+                        context.go('/home');
+                        showToast(
+                          ifRight,
+                          backgroundColor: Colors.green,
+                          context: context,
+                          animation: StyledToastAnimation.slideToTop,
+                          reverseAnimation: StyledToastAnimation.fade,
+                          position: StyledToastPosition.top,
+                          animDuration: const Duration(seconds: 1),
+                          duration: const Duration(seconds: 4),
+                          curve: Curves.elasticOut,
+                          reverseCurve: Curves.linear,
+                        );
+                      });
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Theme.of(context).colorScheme.secondary),
+                        child: Image.asset(height: 50, AppImage.google)),
+                  ),
                 ],
               ),
               SizedBox(

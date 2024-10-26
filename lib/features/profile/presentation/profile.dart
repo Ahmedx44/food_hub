@@ -6,6 +6,7 @@ import 'package:food_hub/features/profile/domain/usecase/get_user_info_usecase.d
 import 'package:food_hub/features/profile/presentation/bloc/user_data_cubit.dart';
 import 'package:food_hub/features/profile/presentation/bloc/user_data_state.dart';
 import 'package:food_hub/service_locator.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -39,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: ExtendedImage.network(
-                          'https://example.com/image.jpg',
+                          '',
                           cache: true,
                           loadStateChanged: (state) {
                             switch (state.extendedImageLoadState) {
@@ -74,7 +75,7 @@ class ProfileScreen extends StatelessWidget {
                           shape: BoxShape.circle,
                         ),
                         child: ExtendedImage.network(
-                          'https://example.com/image.jpg',
+                          '',
                           cache: true,
                           loadStateChanged: (state) {
                             switch (state.extendedImageLoadState) {
@@ -104,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                       builder: (context, snapshot) {
                         return ClipOval(
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                             ),
                             child: ExtendedImage.network(
@@ -146,17 +147,11 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
-                Text(
-                  user!.displayName.toString(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20),
-                ),
                 Center(
                   child: Text(
-                    'View Detail',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary),
+                    user!.displayName.toString(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                 ),
               ],
@@ -166,36 +161,27 @@ class ProfileScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                children: const [
-                  ListTile(
-                    leading: const Icon(Icons.place_sharp),
-                    title: const Text(
-                      'Address',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      context.push('/setting');
+                    },
+                    child: const ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text(
+                        'Setting',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        weight: 2,
                       ),
                     ),
-                    trailing: Icon(
-                      Icons.keyboard_arrow_right,
-                      weight: 2,
-                    ),
                   ),
-                  Divider(),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text(
-                      'Setting',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    trailing: Icon(
-                      Icons.keyboard_arrow_right,
-                      weight: 2,
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
+                  const Divider(),
+                  const ListTile(
                     leading: Icon(Icons.card_giftcard),
                     title: Text(
                       'Inviate',
@@ -208,8 +194,22 @@ class ProfileScreen extends StatelessWidget {
                       weight: 2,
                     ),
                   ),
-                  Divider(),
-                  ListTile(
+                  const Divider(),
+                  const ListTile(
+                    leading: Icon(Icons.favorite),
+                    title: Text(
+                      'Favorite',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      weight: 2,
+                    ),
+                  ),
+                  const Divider(),
+                  const ListTile(
                     leading: Icon(Icons.help),
                     title: Text(
                       'Help Center',
@@ -222,8 +222,8 @@ class ProfileScreen extends StatelessWidget {
                       weight: 2,
                     ),
                   ),
-                  Divider(),
-                  ListTile(
+                  const Divider(),
+                  const ListTile(
                     leading: Icon(Icons.contact_mail),
                     title: Text(
                       'Contact Us',
@@ -236,7 +236,30 @@ class ProfileScreen extends StatelessWidget {
                       weight: 2,
                     ),
                   ),
-                  Divider(),
+                  const Divider(),
+                  InkWell(
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
+                    },
+                    child: const ListTile(
+                      leading: Icon(
+                        Icons.logout,
+                        color: Colors.red,
+                      ),
+                      title: Text(
+                        'Sign Out',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        weight: 2,
+                      ),
+                    ),
+                  ),
+                  const Divider(),
                 ],
               ),
             )

@@ -8,14 +8,19 @@ abstract class OrderService {
 }
 
 class OrderServiceImpl extends OrderService {
-  final user = FirebaseAuth.instance.currentUser!.uid;
   @override
   Future<Either<String, Stream<QuerySnapshot<Map<String, dynamic>>>>>
       getAllUserOrders() async {
     try {
-      final result = await FirebaseFirestore.instance
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user == null) {
+        return Left('User not logged in');
+      }
+
+      final result = FirebaseFirestore.instance
           .collection('Orders')
-          .where('userId', isEqualTo: user)
+          .where('userId', isEqualTo: user.uid)
           .snapshots();
 
       return Right(result);

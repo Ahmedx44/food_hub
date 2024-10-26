@@ -25,7 +25,6 @@ class _HomeState extends State<Home> {
     super.initState();
     pages = [
       const HomeScreen(),
-      const SearchScreen(),
       const CartScreen(),
       const OrderScreen(),
       const ProfileScreen(),
@@ -65,7 +64,6 @@ class _HomeState extends State<Home> {
             child: BottomBarFloating(
               items: const [
                 TabItem(icon: CupertinoIcons.home, title: 'Home'),
-                TabItem(icon: CupertinoIcons.search, title: 'Search'),
                 TabItem(icon: CupertinoIcons.cart, title: 'Cart'),
                 TabItem(icon: CupertinoIcons.doc_on_clipboard, title: 'Order'),
                 TabItem(icon: CupertinoIcons.person, title: 'Profile'),

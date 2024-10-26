@@ -13,6 +13,7 @@ import 'package:food_hub/features/home/presentation/widegt/item_skeleton.dart';
 import 'package:food_hub/features/home/presentation/widegt/items.dart';
 import 'package:food_hub/features/home/presentation/widegt/mini_card.dart';
 import 'package:food_hub/features/home/presentation/widegt/my_app_bar.dart';
+import 'package:food_hub/features/search/presentation/search.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -85,19 +86,23 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.015),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: MediaQuery.of(context).size.width * 0.05),
-                  child: GestureDetector(
-                    onTap: () {
-                      context.go('/search');
-                    },
-                    child: Hero(
-                      tag: 1,
-                      child: Row(
-                        children: [
-                          Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigate to SearchScreen when tapped
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchScreen()),
+                            );
+                          },
+                          child: AbsorbPointer(
                             child: TextField(
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(Icons.search),
@@ -113,26 +118,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.06),
-                          GestureDetector(
-                            onTap: () {
-                              FirebaseAuth.instance.signOut();
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Theme.of(context).colorScheme.primary),
-                              child: Icon(
-                                Icons.tune,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+                      GestureDetector(
+                        onTap: () {
+                          FirebaseAuth.instance.signOut();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.primary),
+                          child: Icon(
+                            Icons.tune,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),

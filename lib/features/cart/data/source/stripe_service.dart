@@ -22,8 +22,7 @@ class StripeServiceImpl extends StripeService {
     try {
       final Dio dio = Dio();
       Map<String, dynamic> data = {
-        'amount': amount *
-            100, // Stripe expects the amount in the smallest currency unit
+        'amount': amount * 100,
         'currency': currency,
       };
 
