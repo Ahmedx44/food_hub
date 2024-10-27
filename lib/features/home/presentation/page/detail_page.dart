@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_hub/features/home/data/model/cart_model.dart';
+import 'package:food_hub/features/home/data/model/favorite_model.dart';
 import 'package:food_hub/features/home/domain/usecase/add_to_cart_usecase.dart';
+import 'package:food_hub/features/home/domain/usecase/add_to_favorite.dart';
+import 'package:food_hub/features/home/domain/usecase/get_favoroite_item.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +19,31 @@ class ItemDetail extends StatefulWidget {
 
 class _ItemDetailState extends State<ItemDetail> {
   int quantity = 1;
+  bool isFavorite = true; // Track favorite status
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfFavorite();
+  }
+
+  Future<void> _checkIfFavorite() async {
+    final result = await sl<GetFavoroiteItemUseCase>().call();
+    result.fold((error) {
+      // Handle error if needed
+      debugPrint('Error fetching favorite items: $error');
+    }, (favoriteStream) {
+      favoriteStream.listen((snapshot) {
+        final favoriteItems =
+            List<Map<String, dynamic>>.from(snapshot['items'] ?? []);
+        setState(() {
+          isFavorite =
+              favoriteItems.any((item) => item['name'] == widget.item['name']);
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,21 +66,55 @@ class _ItemDetailState extends State<ItemDetail> {
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Theme.of(context).colorScheme.secondary),
+                        borderRadius: BorderRadius.circular(15),
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                       child: const Icon(Icons.arrow_back_ios_new),
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      final favoriteModel = FavoriteModel(
+                        id: widget.item.id,
+                        category: widget.item['category'],
+                        description: widget.item['description'],
+                        imageUrl: widget.item['image_url'],
+                        itemLeft: widget.item['item left'],
+                        name: widget.item['name'],
+                        price: widget.item['price'],
+                        rating: widget.item['rating'],
+                      );
+
+                      final result =
+                          await sl<AddToFavoriteUsecase>().call(favoriteModel);
+
+                      result.fold((error) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(error),
+                        ));
+                      }, (success) {
+                        setState(() {
+                          isFavorite = !isFavorite; // Toggle favorite status
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.green,
+                          content: Text(success),
+                        ));
+                      });
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Theme.of(context).colorScheme.secondary),
-                      child: const Icon(Icons.favorite_border),
+                        borderRadius: BorderRadius.circular(15),
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                      child: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorite ? Colors.red : null,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
               Center(
@@ -87,7 +149,7 @@ class _ItemDetailState extends State<ItemDetail> {
                           fontWeight: FontWeight.bold,
                           fontSize: 17,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -100,14 +162,17 @@ class _ItemDetailState extends State<ItemDetail> {
                       fontSize: 16),
                   children: [
                     TextSpan(
-                        text: 'Price: ',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSecondary)),
+                      text: 'Price: ',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                      ),
+                    ),
                     TextSpan(
                       text: widget.item['price'].toString(),
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary),
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                   ],
                 ),
@@ -118,37 +183,40 @@ class _ItemDetailState extends State<ItemDetail> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                        onPressed: () {
-                          setState(() {
-                            if (quantity < widget.item['item left']) {
-                              quantity = quantity + 1;
-                            }
-                          });
-                        },
-                        icon: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Theme.of(context).colorScheme.primary),
-                          child: const Icon(
-                            Icons.add,
-                          ),
-                        )),
+                      onPressed: () {
+                        setState(() {
+                          if (quantity < widget.item['item left']) {
+                            quantity = quantity + 1;
+                          }
+                        });
+                      },
+                      icon: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        child: const Icon(Icons.add),
+                      ),
+                    ),
                     Text(quantity.toString()),
                     IconButton(
-                        onPressed: () {
-                          setState(() {
-                            if (quantity > 1) {
-                              quantity = quantity - 1;
-                            }
-                          });
-                        },
-                        icon: Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Theme.of(context).colorScheme.secondary),
-                            child: const Icon(Icons.remove))),
+                      onPressed: () {
+                        setState(() {
+                          if (quantity > 1) {
+                            quantity = quantity - 1;
+                          }
+                        });
+                      },
+                      icon: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                        child: const Icon(Icons.remove),
+                      ),
+                    ),
                   ],
                 ),
               ),

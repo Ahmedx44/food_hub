@@ -2,11 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:food_hub/features/home/data/model/cart_model.dart';
+import 'package:food_hub/features/home/data/model/favorite_model.dart';
 
 abstract class ItemService {
   Future<Either<String, Stream<QuerySnapshot<Map<String, dynamic>>>>>
       getPopularItems();
   Future<Either<String, String>> addtocart(CartModel cartModel);
+  Future<Either<String, String>> addtofavorite(FavoriteModel favoriteModel);
+  Future<Either<String, Stream<DocumentSnapshot<Map<String, dynamic>>>>>
+      getFavoriteItems();
 }
 
 class ItemServiceImpl extends ItemService {
@@ -79,6 +83,64 @@ class ItemServiceImpl extends ItemService {
       });
 
       return const Right('Your item has been successfully added to cart');
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, String>> addtofavorite(
+      FavoriteModel favoriteModel) async {
+    try {
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      final favDocRef = _firebaseFirestore.collection('favorite').doc(userId);
+
+      final favDoc = await favDocRef.get();
+
+      List<Map<String, dynamic>> favoriteItems = [];
+
+      if (favDoc.exists) {
+        favoriteItems =
+            List<Map<String, dynamic>>.from(favDoc.data()?['items'] ?? []);
+      }
+
+      // Check if item already exists in favorites
+      final itemIndex = favoriteItems
+          .indexWhere((item) => item['name'] == favoriteModel.name);
+
+      if (itemIndex == -1) {
+        // If not found, add to favorites
+        favoriteItems.add({
+          'name': favoriteModel.name,
+          'image': favoriteModel.imageUrl,
+          'price': favoriteModel.price.toString(),
+          'item_left': favoriteModel.itemLeft,
+        });
+
+        // Save the updated favorite items back to Firestore
+        await favDocRef.set({
+          'items': favoriteItems,
+          'updatedAt': Timestamp.now(),
+        });
+
+        return const Right('Item added to favorites successfully.');
+      } else {
+        return const Right('Item is already in favorites.');
+      }
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, Stream<DocumentSnapshot<Map<String, dynamic>>>>>
+      getFavoriteItems() async {
+    try {
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      final favoriteItemsStream =
+          _firebaseFirestore.collection('favorite').doc(userId).snapshots();
+
+      return Right(favoriteItemsStream);
     } catch (e) {
       return Left(e.toString());
     }

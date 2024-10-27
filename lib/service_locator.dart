@@ -19,6 +19,7 @@ import 'package:food_hub/features/home/data/repository/location_repositoy_impl.d
 import 'package:food_hub/features/home/data/source/item_Service.dart';
 import 'package:food_hub/features/home/data/source/location_service.dart';
 import 'package:food_hub/features/home/domain/usecase/add_to_cart_usecase.dart';
+import 'package:food_hub/features/home/domain/usecase/add_to_favorite.dart';
 import 'package:food_hub/features/home/domain/usecase/get_item_usecase.dart';
 import 'package:food_hub/features/home/domain/usecase/get_location_usecase.dart';
 import 'package:food_hub/features/order/data/repository/order_repository_impl.dart';
@@ -44,73 +45,27 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<UserService>(UserServiceImpl());
 
   //UseCase
-  sl.registerSingleton<SigninWithGoogle>(
-    SigninWithGoogle(),
-  );
-  sl.registerSingleton<SingupUsecase>(
-    SingupUsecase(),
-  );
-
-  sl.registerSingleton<SiginUsecase>(
-    SiginUsecase(),
-  );
-
-  sl.registerSingleton<ResetUsecase>(
-    ResetUsecase(),
-  );
-
-  sl.registerSingleton<GetLocationUsecase>(
-    GetLocationUsecase(),
-  );
-  sl.registerSingleton<GetItemUsecase>(
-    GetItemUsecase(),
-  );
-  sl.registerSingleton<AddToCartUsecase>(
-    AddToCartUsecase(),
-  );
-  sl.registerSingleton<GetAllCart>(
-    GetAllCart(),
-  );
-  sl.registerSingleton<RemoveItem>(
-    RemoveItem(),
-  );
-  sl.registerSingleton<UpdateQuantityUsecase>(
-    UpdateQuantityUsecase(),
-  );
-  sl.registerSingleton<StripeRepository>(
-    StripeRespositoryImpl(),
-  );
-  sl.registerSingleton<MakePaymentUsecase>(
-    MakePaymentUsecase(),
-  );
-
-  sl.registerSingleton<MakeOrderUsecase>(
-    MakeOrderUsecase(),
-  );
-
-  sl.registerSingleton<GetUserOrdersUseCase>(
-    GetUserOrdersUseCase(),
-  );
-
-  sl.registerSingleton<GetUserInfoUsecase>(
-    GetUserInfoUsecase(),
-  );
+  sl.registerSingleton<SigninWithGoogle>(SigninWithGoogle());
+  sl.registerSingleton<SingupUsecase>(SingupUsecase());
+  sl.registerSingleton<SiginUsecase>(SiginUsecase());
+  sl.registerSingleton<ResetUsecase>(ResetUsecase());
+  sl.registerSingleton<GetLocationUsecase>(GetLocationUsecase());
+  sl.registerSingleton<GetItemUsecase>(GetItemUsecase());
+  sl.registerSingleton<AddToCartUsecase>(AddToCartUsecase());
+  sl.registerSingleton<GetAllCart>(GetAllCart());
+  sl.registerSingleton<RemoveItem>(RemoveItem());
+  sl.registerSingleton<UpdateQuantityUsecase>(UpdateQuantityUsecase());
+  sl.registerSingleton<StripeRepository>(StripeRespositoryImpl());
+  sl.registerSingleton<MakePaymentUsecase>(MakePaymentUsecase());
+  sl.registerSingleton<MakeOrderUsecase>(MakeOrderUsecase());
+  sl.registerSingleton<GetUserOrdersUseCase>(GetUserOrdersUseCase());
+  sl.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
+  sl.registerSingleton<AddToFavoriteUsecase>(AddToFavoriteUsecase());
 
   //Implementation
-  sl.registerSingleton<LocationRepositoyImpl>(
-    LocationRepositoyImpl(),
-  );
-
-  sl.registerSingleton<ItemRepositoryImpl>(
-    ItemRepositoryImpl(),
-  );
-  sl.registerSingleton<CartRepositoryImpl>(
-    CartRepositoryImpl(),
-  );
-  sl.registerSingleton<OrderResporiotry>(
-    OrderRepositoryImpl(),
-  );
-  sl.registerSingleton<UserRepository>(
-    UserRepositoryImpl(),
-  );
+  sl.registerSingleton<LocationRepositoyImpl>(LocationRepositoyImpl());
+  sl.registerSingleton<ItemRepositoryImpl>(ItemRepositoryImpl());
+  sl.registerSingleton<CartRepositoryImpl>(CartRepositoryImpl());
+  sl.registerSingleton<OrderResporiotry>(OrderRepositoryImpl());
+  sl.registerSingleton<UserRepository>(UserRepositoryImpl());
 }
