@@ -195,17 +195,22 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   const Divider(),
-                  const ListTile(
-                    leading: Icon(Icons.favorite),
-                    title: Text(
-                      'Favorite',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                  InkWell(
+                    onTap: () {
+                      context.push('/favorite');
+                    },
+                    child: const ListTile(
+                      leading: Icon(Icons.favorite),
+                      title: Text(
+                        'Favorite',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    trailing: Icon(
-                      Icons.keyboard_arrow_right,
-                      weight: 2,
+                      trailing: Icon(
+                        Icons.keyboard_arrow_right,
+                        weight: 2,
+                      ),
                     ),
                   ),
                   const Divider(),

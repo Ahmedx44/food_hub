@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -12,6 +13,7 @@ import 'package:food_hub/features/auth/presentation/pages/login.dart';
 import 'package:food_hub/features/auth/presentation/pages/signup.dart';
 import 'package:food_hub/features/cart/presentation/bloc/payment_cubit/payment_cubit.dart';
 import 'package:food_hub/features/cart/presentation/page/map.dart';
+import 'package:food_hub/features/favorite/presentation/page/favorite.dart';
 import 'package:food_hub/features/home/presentation/home.dart';
 import 'package:food_hub/features/home/presentation/page/detail_page.dart';
 import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart';
@@ -22,9 +24,16 @@ import 'package:food_hub/firebase_options.dart';
 import 'package:food_hub/service_locator.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorage.webStorageDirectory
+        : await getApplicationDocumentsDirectory(),
+  );
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Stripe.publishableKey = StripeKey.stripePublishableKey;
   await initializedDependency();
@@ -104,7 +113,13 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/setting',
       builder: (BuildContext context, GoRouterState state) {
-        return Setting();
+        return const Setting();
+      },
+    ),
+    GoRoute(
+      path: '/favorite',
+      builder: (BuildContext context, GoRouterState state) {
+        return const FavoriteScreen();
       },
     ),
   ],
