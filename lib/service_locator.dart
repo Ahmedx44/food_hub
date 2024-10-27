@@ -14,6 +14,10 @@ import 'package:food_hub/features/cart/domain/usecase/make_order_usecase.dart';
 import 'package:food_hub/features/cart/domain/usecase/make_payment_usecase.dart';
 import 'package:food_hub/features/cart/domain/usecase/remove_item.dart';
 import 'package:food_hub/features/cart/domain/usecase/update_quantity_usecase.dart';
+import 'package:food_hub/features/favorite/data/repsoitory/favorite_repostiory_impl.dart';
+import 'package:food_hub/features/favorite/data/source/favorite_service.dart';
+import 'package:food_hub/features/favorite/domain/repository/favorite_reposiotry.dart';
+import 'package:food_hub/features/favorite/domain/usecase/get_user_favorite_usecase.dart';
 import 'package:food_hub/features/home/data/repository/item_repository_impl.dart';
 import 'package:food_hub/features/home/data/repository/location_repositoy_impl.dart';
 import 'package:food_hub/features/home/data/source/item_Service.dart';
@@ -43,6 +47,7 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<StripeService>(StripeServiceImpl());
   sl.registerSingleton<OrderService>(OrderServiceImpl());
   sl.registerSingleton<UserService>(UserServiceImpl());
+  sl.registerSingleton<FavoriteService>(FavoriteServiceImpl());
 
   //UseCase
   sl.registerSingleton<SigninWithGoogle>(SigninWithGoogle());
@@ -61,6 +66,7 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<GetUserOrdersUseCase>(GetUserOrdersUseCase());
   sl.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
   sl.registerSingleton<AddToFavoriteUsecase>(AddToFavoriteUsecase());
+  sl.registerSingleton<GetUserFavoriteUsecase>(GetUserFavoriteUsecase());
 
   //Implementation
   sl.registerSingleton<LocationRepositoyImpl>(LocationRepositoyImpl());
@@ -68,4 +74,5 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<CartRepositoryImpl>(CartRepositoryImpl());
   sl.registerSingleton<OrderResporiotry>(OrderRepositoryImpl());
   sl.registerSingleton<UserRepository>(UserRepositoryImpl());
+  sl.registerSingleton<FavoriteRepostioryImpl>(FavoriteRepostioryImpl());
 }
