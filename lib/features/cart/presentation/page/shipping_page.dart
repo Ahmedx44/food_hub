@@ -110,7 +110,7 @@ class _ShippingPageState extends State<ShippingPage> {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.onSecondaryContainer,
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
           BoxShadow(
@@ -216,7 +216,7 @@ class _ShippingPageState extends State<ShippingPage> {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.onTertiaryContainer,
         borderRadius: BorderRadius.circular(10),
         boxShadow: const [
           BoxShadow(

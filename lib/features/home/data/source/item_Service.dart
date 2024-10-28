@@ -52,28 +52,27 @@ class ItemServiceImpl extends ItemService {
 
       if (itemIndex >= 0) {
         int currentQuantity = int.parse(cartItems[itemIndex]['quantity']);
-        double currentPrice =
-            double.parse(cartItems[itemIndex]['current_price']);
 
-        currentQuantity += int.parse(cartModel.quantity.toString());
+        currentQuantity += int.parse(cartModel.quantity);
+        double updatedPrice = double.parse(cartModel.price) * currentQuantity;
 
         cartItems[itemIndex]['quantity'] = currentQuantity.toString();
-        cartItems[itemIndex]['current_price'] =
-            (cartModel.price * currentQuantity).toString();
+        cartItems[itemIndex]['current_price'] = updatedPrice.toStringAsFixed(2);
       } else {
         cartItems.add({
           'name': cartModel.name,
           'image': cartModel.imageUrl,
           'quantity': cartModel.quantity.toString(),
           'original_price': cartModel.price.toString(),
-          'current_price': cartModel.price.toString(),
+          'current_price': cartModel.price,
           'item_left': cartModel.itemLeft
         });
       }
 
       totalPrice = cartItems.fold(0.0, (sum, item) {
-        return sum +
-            (double.parse(item['current_price']) * int.parse(item['quantity']));
+        final itemPrice = double.tryParse(item['current_price'] ?? '0') ?? 0.0;
+        final itemQuantity = int.tryParse(item['quantity'] ?? '0') ?? 0;
+        return sum + (itemPrice * itemQuantity);
       });
 
       await cartDocRef.set({

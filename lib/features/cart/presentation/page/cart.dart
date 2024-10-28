@@ -44,8 +44,9 @@ class _CartScreenState extends State<CartScreen> {
                   final cartItems = snapshot.data!;
 
                   double totalPrice = cartItems.fold(0.0, (sum, item) {
-                    return sum +
-                        ((item.originalprice) * double.parse(item.quantity));
+                    double quantity = double.tryParse(item.quantity) ??
+                        1.0; // Default to 1 if parsing fails
+                    return sum + (item.originalprice * quantity);
                   });
 
                   return SingleChildScrollView(

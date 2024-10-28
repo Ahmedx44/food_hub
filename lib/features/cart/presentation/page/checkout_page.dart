@@ -72,19 +72,40 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ),
             EasyStepper(
               enableStepTapping: false,
+              activeStepIconColor: Theme.of(context).colorScheme.onSecondary,
+              activeStepBackgroundColor:
+                  Theme.of(context).colorScheme.onSecondary,
               fitWidth: true,
               activeStep: _activeStep,
-              steps: const [
+              steps: [
                 EasyStep(
-                  icon: Icon(Icons.food_bank_rounded, size: 24),
+                  icon: Icon(
+                    Icons.food_bank_rounded,
+                    size: 24,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
                   title: 'Food',
                 ),
                 EasyStep(
-                  icon: Icon(Icons.payment, size: 24),
+                  icon: Icon(
+                    Icons.payment,
+                    size: 24,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black,
+                  ),
                   title: 'Payment & Address',
                 ),
                 EasyStep(
-                  icon: Icon(Icons.check_circle, size: 24),
+                  icon: Icon(
+                    Icons.check_circle,
+                    size: 24,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Theme.of(context).colorScheme.secondary
+                        : Colors.black,
+                  ),
                   title: 'Ordered',
                 ),
               ],

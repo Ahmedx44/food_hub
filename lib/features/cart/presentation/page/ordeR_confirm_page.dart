@@ -29,7 +29,7 @@ class OrderConfirmPage extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.tertiary,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: const [
                     BoxShadow(
@@ -80,14 +80,16 @@ class OrderConfirmPage extends StatelessWidget {
                         const SizedBox(height: 5),
                         Text(
                           'Quantity: ${item.quantity}',
-                          style: const TextStyle(
-                              fontSize: 14, color: Colors.black54),
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Text(
                           'Price: \$${item.price.toStringAsFixed(2)}',
                           style: const TextStyle(
-                              fontSize: 14, color: Colors.black54),
+                            fontSize: 14,
+                          ),
                         ),
                       ],
                     ),
