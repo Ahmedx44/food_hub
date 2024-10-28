@@ -34,9 +34,9 @@ class OrderScreen extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   );
                 } else if (snapshot.hasError) {
-                  return Center(child: Text("Error: ${snapshot.error}"));
+                  return Center(child: Text("error: ${snapshot.error}"));
                 } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text("No orders found."));
+                  return const Center(child: Text("no orders found."));
                 }
 
                 final orders = snapshot.data!.docs;
@@ -53,72 +53,87 @@ class OrderScreen extends StatelessWidget {
                           final orderData = orders[index].data();
 
                           return GestureDetector(
-                            onTap: () {
-                              context.push('/order_detail', extra: orderData);
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.tertiary,
+                              onTap: () {
+                                context.push('/order_detail', extra: orderData);
+                              },
+                              child: Container(
+                                key: ValueKey(Theme.of(context)
+                                    .brightness), // Unique key based on the theme mode
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .surfaceVariant,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .onTertiaryContainer,
+                                          .shadow
+                                          .withOpacity(0.2),
                                       blurRadius: 10,
                                       spreadRadius: 2,
                                       offset: const Offset(0, 2),
                                     ),
-                                  ]),
-                              child: ListTile(
-                                title: Row(
-                                  children: [
-                                    Text(
-                                      'Order ID: ',
-                                      style: TextStyle(
+                                  ],
+                                ),
+                                child: ListTile(
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                        'Order ID: ',
+                                        style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 12,
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .onSecondary),
-                                    ),
-                                    Text(
-                                      '${orders[index].id}',
-                                      style: TextStyle(
+                                              .onSurfaceVariant,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${orders[index].id}',
+                                        style: TextStyle(
                                           fontSize: 12,
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .onSecondary),
-                                    )
-                                  ],
-                                ),
-                                subtitle: Row(
-                                  children: [
-                                    Text(
-                                      "Order Total: ",
-                                      style: TextStyle(
+                                              .onSurfaceVariant,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  subtitle: Row(
+                                    children: [
+                                      Text(
+                                        "Order Total: ",
+                                        style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .onSecondary),
+                                              .onSurfaceVariant,
+                                        ),
+                                      ),
+                                      Text(
+                                        '\$${orderData['amount']}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  trailing: Text(
+                                    "Status: ${orderData['orderStatus']}",
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
                                     ),
-                                    Text(
-                                      '\$${orderData['amount']}',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary),
-                                    )
-                                  ],
+                                  ),
                                 ),
-                                trailing:
-                                    Text("Status: ${orderData['orderStatus']}"),
-                              ),
-                            ),
-                          );
+                              ));
                         },
                       ),
                     ),
@@ -127,7 +142,7 @@ class OrderScreen extends StatelessWidget {
               },
             );
           }
-          return const SizedBox.shrink();
+          return const SizedBox();
         },
       ),
     );
