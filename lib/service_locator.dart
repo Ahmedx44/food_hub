@@ -40,43 +40,50 @@ import 'package:get_it/get_it.dart';
 final sl = GetIt.instance;
 
 Future<void> initializedDependency() async {
-  //Service
-  sl.registerSingleton<AuthService>(AuthServiceImpl());
+  // Register LocationService as a singleton, since it was requested not to change
   sl.registerSingleton<LocationService>(LocationServiceImpl());
-  sl.registerSingleton<ItemService>(ItemServiceImpl());
-  sl.registerSingleton<CartService>(CartServiceImpl());
-  sl.registerSingleton<StripeService>(StripeServiceImpl());
-  sl.registerSingleton<OrderService>(OrderServiceImpl());
-  sl.registerSingleton<UserService>(UserServiceImpl());
-  sl.registerSingleton<FavoriteService>(FavoriteServiceImpl());
-  sl.registerSingleton<CategoryService>(CategoryServiceImpl());
 
-  //UseCase
-  sl.registerSingleton<SigninWithGoogle>(SigninWithGoogle());
-  sl.registerSingleton<SingupUsecase>(SingupUsecase());
-  sl.registerSingleton<SiginUsecase>(SiginUsecase());
-  sl.registerSingleton<ResetUsecase>(ResetUsecase());
-  sl.registerSingleton<GetLocationUsecase>(GetLocationUsecase());
-  sl.registerSingleton<GetItemUsecase>(GetItemUsecase());
-  sl.registerSingleton<AddToCartUsecase>(AddToCartUsecase());
-  sl.registerSingleton<GetAllCart>(GetAllCart());
-  sl.registerSingleton<RemoveItem>(RemoveItem());
-  sl.registerSingleton<UpdateQuantityUsecase>(UpdateQuantityUsecase());
-  sl.registerSingleton<StripeRepository>(StripeRespositoryImpl());
-  sl.registerSingleton<MakePaymentUsecase>(MakePaymentUsecase());
-  sl.registerSingleton<MakeOrderUsecase>(MakeOrderUsecase());
-  sl.registerSingleton<GetUserOrdersUseCase>(GetUserOrdersUseCase());
-  sl.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
-  sl.registerSingleton<AddToFavoriteUsecase>(AddToFavoriteUsecase());
-  sl.registerSingleton<GetUserFavoriteUsecase>(GetUserFavoriteUsecase());
-  sl.registerSingleton<GetCategoryUsecase>(GetCategoryUsecase());
+  // Service: Use registerLazySingleton for other services
+  sl.registerLazySingleton<AuthService>(() => AuthServiceImpl());
+  sl.registerLazySingleton<ItemService>(() => ItemServiceImpl());
+  sl.registerLazySingleton<CartService>(() => CartServiceImpl());
+  sl.registerLazySingleton<StripeService>(() => StripeServiceImpl());
+  sl.registerLazySingleton<OrderService>(() => OrderServiceImpl());
+  sl.registerLazySingleton<UserService>(() => UserServiceImpl());
+  sl.registerLazySingleton<FavoriteService>(() => FavoriteServiceImpl());
+  sl.registerLazySingleton<CategoryService>(() => CategoryServiceImpl());
 
-  //Implementation
-  sl.registerSingleton<LocationRepositoyImpl>(LocationRepositoyImpl());
-  sl.registerSingleton<ItemRepositoryImpl>(ItemRepositoryImpl());
-  sl.registerSingleton<CartRepositoryImpl>(CartRepositoryImpl());
-  sl.registerSingleton<OrderResporiotry>(OrderRepositoryImpl());
-  sl.registerSingleton<UserRepository>(UserRepositoryImpl());
-  sl.registerSingleton<FavoriteRepostioryImpl>(FavoriteRepostioryImpl());
-  sl.registerSingleton<CategoryRepositoryImpl>(CategoryRepositoryImpl());
+  // UseCase: Use registerLazySingleton for all use cases
+  sl.registerLazySingleton<SigninWithGoogle>(() => SigninWithGoogle());
+  sl.registerLazySingleton<SingupUsecase>(() => SingupUsecase());
+  sl.registerLazySingleton<SiginUsecase>(() => SiginUsecase());
+  sl.registerLazySingleton<ResetUsecase>(() => ResetUsecase());
+  sl.registerLazySingleton<GetLocationUsecase>(() => GetLocationUsecase());
+  sl.registerLazySingleton<GetItemUsecase>(() => GetItemUsecase());
+  sl.registerLazySingleton<AddToCartUsecase>(() => AddToCartUsecase());
+  sl.registerLazySingleton<GetAllCart>(() => GetAllCart());
+  sl.registerLazySingleton<RemoveItem>(() => RemoveItem());
+  sl.registerLazySingleton<UpdateQuantityUsecase>(
+      () => UpdateQuantityUsecase());
+  sl.registerLazySingleton<StripeRepository>(() => StripeRespositoryImpl());
+  sl.registerLazySingleton<MakePaymentUsecase>(() => MakePaymentUsecase());
+  sl.registerLazySingleton<MakeOrderUsecase>(() => MakeOrderUsecase());
+  sl.registerLazySingleton<GetUserOrdersUseCase>(() => GetUserOrdersUseCase());
+  sl.registerLazySingleton<GetUserInfoUsecase>(() => GetUserInfoUsecase());
+  sl.registerLazySingleton<AddToFavoriteUsecase>(() => AddToFavoriteUsecase());
+  sl.registerLazySingleton<GetUserFavoriteUsecase>(
+      () => GetUserFavoriteUsecase());
+  sl.registerLazySingleton<GetCategoryUsecase>(() => GetCategoryUsecase());
+
+  // Implementation: Use registerLazySingleton for all repository implementations
+  sl.registerLazySingleton<LocationRepositoyImpl>(
+      () => LocationRepositoyImpl());
+  sl.registerLazySingleton<ItemRepositoryImpl>(() => ItemRepositoryImpl());
+  sl.registerLazySingleton<CartRepositoryImpl>(() => CartRepositoryImpl());
+  sl.registerLazySingleton<OrderResporiotry>(() => OrderRepositoryImpl());
+  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl());
+  sl.registerLazySingleton<FavoriteRepostioryImpl>(
+      () => FavoriteRepostioryImpl());
+  sl.registerLazySingleton<CategoryRepositoryImpl>(
+      () => CategoryRepositoryImpl());
 }
