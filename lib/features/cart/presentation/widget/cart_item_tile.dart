@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/widgets.dart';
 import 'package:food_hub/features/cart/data/model/in_cart_model.dart';
 import 'package:food_hub/features/cart/domain/usecase/remove_item.dart';
 import 'package:food_hub/service_locator.dart';

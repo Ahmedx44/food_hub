@@ -7,7 +7,6 @@ import 'package:food_hub/features/cart/presentation/page/cart.dart';
 import 'package:food_hub/features/home/presentation/page/homepage.dart';
 import 'package:food_hub/features/order/presentation/pages/order.dart';
 import 'package:food_hub/features/profile/presentation/profile.dart';
-import 'package:food_hub/features/search/presentation/search.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

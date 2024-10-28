@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:food_hub/core/common/const.dart';
 import 'package:food_hub/features/cart/data/model/order_model.dart';
 import 'package:food_hub/features/cart/data/model/payment_model.dart';
 
@@ -26,21 +25,24 @@ class StripeServiceImpl extends StripeService {
         'currency': currency,
       };
 
+      final keyDoc =
+          await FirebaseFirestore.instance.collection('key').doc('key').get();
+      final secretKey = keyDoc.data()?['secert_key'];
+
       final response = await dio.post(
         'https://api.stripe.com/v1/payment_intents',
         data: data,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {
-            'Authorization': 'Bearer ${StripeKey.stripeSecertKey}',
+            'Authorization': 'Bearer ${secretKey}',
             'Content-Type': 'application/x-www-form-urlencoded',
           },
         ),
       );
 
       if (response.data != null && response.data['client_secret'] != null) {
-        return Right(
-            response.data['client_secret']); // Return the client secret.
+        return Right(response.data['client_secret']);
       } else {
         return const Left('Failed to create Payment Intent');
       }

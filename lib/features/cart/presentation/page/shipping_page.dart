@@ -67,22 +67,20 @@ class _ShippingPageState extends State<ShippingPage> {
   }
 
   Future<void> getPlacemark() async {
-    if (location != null) {
-      try {
-        List<Placemark> placemarks = await placemarkFromCoordinates(
-            location!.latitude, location!.longitude);
-        setState(() {
-          place = placemarks;
-          isLoading = false;
-        });
-      } catch (e) {
-        setState(() {
-          errorMessage = "Failed to get placemark. Please try again.";
-          isLoading = false;
-        });
-      }
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          location!.latitude, location!.longitude);
+      setState(() {
+        place = placemarks;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        errorMessage = "Failed to get placemark. Please try again.";
+        isLoading = false;
+      });
     }
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -165,31 +163,25 @@ class _ShippingPageState extends State<ShippingPage> {
         const SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
-            if (location != null) {
-              final updatedLocation =
-                  await context.push('/map', extra: location);
-              if (updatedLocation != null && updatedLocation is LatLng) {
-                setState(() {
-                  location = Position(
-                    headingAccuracy: 1.0,
-                    altitudeAccuracy: 1.0,
-                    latitude: updatedLocation.latitude,
-                    longitude: updatedLocation.longitude,
-                    timestamp: DateTime.now(),
-                    accuracy: 1.0,
-                    altitude: 0.0,
-                    heading: 0.0,
-                    speed: 0.0,
-                    speedAccuracy: 0.0,
-                  );
-                });
-              }
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Location not available yet')),
-              );
+            final updatedLocation =
+                await context.push('/map', extra: location);
+            if (updatedLocation != null && updatedLocation is LatLng) {
+              setState(() {
+                location = Position(
+                  headingAccuracy: 1.0,
+                  altitudeAccuracy: 1.0,
+                  latitude: updatedLocation.latitude,
+                  longitude: updatedLocation.longitude,
+                  timestamp: DateTime.now(),
+                  accuracy: 1.0,
+                  altitude: 0.0,
+                  heading: 0.0,
+                  speed: 0.0,
+                  speedAccuracy: 0.0,
+                );
+              });
             }
-          },
+                    },
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(12),
