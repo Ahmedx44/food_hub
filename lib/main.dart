@@ -14,6 +14,7 @@ import 'package:food_hub/features/auth/presentation/pages/signup.dart';
 import 'package:food_hub/features/cart/presentation/bloc/payment_cubit/payment_cubit.dart';
 import 'package:food_hub/features/cart/presentation/page/map.dart';
 import 'package:food_hub/features/favorite/presentation/page/favorite.dart';
+import 'package:food_hub/features/foods%20list/presentation/page/list_of_foods.dart';
 import 'package:food_hub/features/home/presentation/home.dart';
 import 'package:food_hub/features/home/presentation/page/detail_page.dart';
 import 'package:food_hub/features/onboarding/presentation/onboarding_screen.dart';
@@ -120,6 +121,15 @@ final GoRouter _router = GoRouter(
       path: '/favorite',
       builder: (BuildContext context, GoRouterState state) {
         return const FavoriteScreen();
+      },
+    ),
+    GoRoute(
+      path: '/category',
+      builder: (BuildContext context, GoRouterState state) {
+        final category = state.extra as String;
+        return ListOfFoods(
+          category: category,
+        );
       },
     ),
   ],

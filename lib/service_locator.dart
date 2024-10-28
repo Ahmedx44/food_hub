@@ -3,7 +3,6 @@ import 'package:food_hub/features/auth/domain/usecase/reset_usecase.dart';
 import 'package:food_hub/features/auth/domain/usecase/sigin_usecase.dart';
 import 'package:food_hub/features/auth/domain/usecase/signin_with_google.dart';
 import 'package:food_hub/features/auth/domain/usecase/singup_usecase.dart';
-
 import 'package:food_hub/features/cart/data/repository/cart_repository_impl.dart';
 import 'package:food_hub/features/cart/data/repository/stripe_respository_impl.dart';
 import 'package:food_hub/features/cart/data/source/cart_service.dart';
@@ -16,8 +15,10 @@ import 'package:food_hub/features/cart/domain/usecase/remove_item.dart';
 import 'package:food_hub/features/cart/domain/usecase/update_quantity_usecase.dart';
 import 'package:food_hub/features/favorite/data/repsoitory/favorite_repostiory_impl.dart';
 import 'package:food_hub/features/favorite/data/source/favorite_service.dart';
-import 'package:food_hub/features/favorite/domain/repository/favorite_reposiotry.dart';
 import 'package:food_hub/features/favorite/domain/usecase/get_user_favorite_usecase.dart';
+import 'package:food_hub/features/foods%20list/data/repository/category_repository_impl.dart';
+import 'package:food_hub/features/foods%20list/data/source/get_food_by_category.dart';
+import 'package:food_hub/features/foods%20list/domain/usecase/get_category_usecase.dart';
 import 'package:food_hub/features/home/data/repository/item_repository_impl.dart';
 import 'package:food_hub/features/home/data/repository/location_repositoy_impl.dart';
 import 'package:food_hub/features/home/data/source/item_Service.dart';
@@ -48,6 +49,7 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<OrderService>(OrderServiceImpl());
   sl.registerSingleton<UserService>(UserServiceImpl());
   sl.registerSingleton<FavoriteService>(FavoriteServiceImpl());
+  sl.registerSingleton<CategoryService>(CategoryServiceImpl());
 
   //UseCase
   sl.registerSingleton<SigninWithGoogle>(SigninWithGoogle());
@@ -67,6 +69,7 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
   sl.registerSingleton<AddToFavoriteUsecase>(AddToFavoriteUsecase());
   sl.registerSingleton<GetUserFavoriteUsecase>(GetUserFavoriteUsecase());
+  sl.registerSingleton<GetCategoryUsecase>(GetCategoryUsecase());
 
   //Implementation
   sl.registerSingleton<LocationRepositoyImpl>(LocationRepositoyImpl());
@@ -75,4 +78,5 @@ Future<void> initializedDependency() async {
   sl.registerSingleton<OrderResporiotry>(OrderRepositoryImpl());
   sl.registerSingleton<UserRepository>(UserRepositoryImpl());
   sl.registerSingleton<FavoriteRepostioryImpl>(FavoriteRepostioryImpl());
+  sl.registerSingleton<CategoryRepositoryImpl>(CategoryRepositoryImpl());
 }

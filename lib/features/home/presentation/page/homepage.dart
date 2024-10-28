@@ -164,20 +164,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: MediaQuery.of(context).size.height * 0.3,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: const [
-                      MiniCards(
-                          image:
-                              'https://firebasestorage.googleapis.com/v0/b/food-hub-db057.appspot.com/o/food%20image%2Fpngwing.com(12).png?alt=media&token=4e402e09-1bc6-4f2e-bf49-9f5549d92170',
-                          name: 'Burger'),
-                      MiniCards(
-                        image:
-                            'https://firebasestorage.googleapis.com/v0/b/food-hub-db057.appspot.com/o/food%20image%2Fpngwing.com(13).png?alt=media&token=40af9837-6eb9-4214-bee2-89cce5351ec7',
-                        name: 'Pizza',
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          context.push('/category', extra: 'Burgers');
+                        },
+                        child: const MiniCards(
+                            image:
+                                'https://firebasestorage.googleapis.com/v0/b/food-hub-db057.appspot.com/o/food%20image%2Fpngwing.com(12).png?alt=media&token=4e402e09-1bc6-4f2e-bf49-9f5549d92170',
+                            name: 'Burger'),
                       ),
-                      MiniCards(
-                        image:
-                            'https://firebasestorage.googleapis.com/v0/b/food-hub-db057.appspot.com/o/food%20image%2Fpngwing.com(14).png?alt=media&token=69938f98-2fc8-48ab-97fc-e50198accf77',
-                        name: 'Pasta',
+                      GestureDetector(
+                        onTap: () {
+                          context.push('/category', extra: 'pizza');
+                        },
+                        child: const MiniCards(
+                          image:
+                              'https://firebasestorage.googleapis.com/v0/b/food-hub-db057.appspot.com/o/food%20image%2Fpngwing.com(13).png?alt=media&token=40af9837-6eb9-4214-bee2-89cce5351ec7',
+                          name: 'Pizza',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          context.push('/category', extra: 'Pasta');
+                        },
+                        child: const MiniCards(
+                          image:
+                              'https://firebasestorage.googleapis.com/v0/b/food-hub-db057.appspot.com/o/food%20image%2Fpngwing.com(14).png?alt=media&token=69938f98-2fc8-48ab-97fc-e50198accf77',
+                          name: 'Pasta',
+                        ),
                       )
                     ],
                   ),
