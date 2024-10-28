@@ -103,12 +103,10 @@ class ItemServiceImpl extends ItemService {
             List<Map<String, dynamic>>.from(favDoc.data()?['items'] ?? []);
       }
 
-      // Check if item already exists in favorites
       final itemIndex = favoriteItems
           .indexWhere((item) => item['name'] == favoriteModel.name);
 
       if (itemIndex == -1) {
-        // If not found, add to favorites
         favoriteItems.add({
           'name': favoriteModel.name,
           'image': favoriteModel.imageUrl,
@@ -116,7 +114,6 @@ class ItemServiceImpl extends ItemService {
           'item_left': favoriteModel.itemLeft,
         });
 
-        // Save the updated favorite items back to Firestore
         await favDocRef.set({
           'items': favoriteItems,
           'updatedAt': Timestamp.now(),
