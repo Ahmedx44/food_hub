@@ -244,6 +244,7 @@ class ProfileScreen extends StatelessWidget {
                   const Divider(),
                   InkWell(
                     onTap: () {
+                      context.go('/login');
                       FirebaseAuth.instance.signOut();
                     },
                     child: const ListTile(

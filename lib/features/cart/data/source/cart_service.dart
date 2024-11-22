@@ -27,18 +27,7 @@ class CartServiceImpl extends CartService {
         final List<dynamic> items = snapshot.data()?['items'] ?? [];
 
         return items.map((item) {
-          return InCartModel(
-            originalprice: double.parse(((item['original_price'] ?? '0.0'))),
-            category: item['category'] ?? '',
-            description: item['description'] ?? '',
-            imageUrl: item['image'] ?? '',
-            itemLeft: item['item_left'] ?? '',
-            rating: item['rating'] ?? '',
-            id: item['id'] ?? '',
-            name: item['name'] ?? 'Unnamed Item',
-            quantity: (item['quantity'] ?? '0').toString(),
-            price: double.parse(((item['current_price'] ?? '0.0'))),
-          );
+          return InCartModel.fromMap(item);
         }).toList();
       } else {
         return [];

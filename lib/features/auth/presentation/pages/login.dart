@@ -113,6 +113,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.01,
+              ),
 
               Center(
                 child: ElevatedButton(
@@ -257,7 +260,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Theme.of(context).colorScheme.onPrimary),
                           children: [
                         TextSpan(
-                          text: 'Singup',
+                          text: 'Signup',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.bold),
