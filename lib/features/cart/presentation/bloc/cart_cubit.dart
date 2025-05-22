@@ -15,7 +15,7 @@ class CartCubit extends Cubit<CartState> {
     final futureResult = getAllCart();
 
     futureResult.then((stream) {
-      emit(CartStateLoaded(cartItem: stream));
+      // emit(CartStateLoaded(cartItem: stream));
     }).catchError((error) {
       emit(CartStateError(error.toString()));
     });

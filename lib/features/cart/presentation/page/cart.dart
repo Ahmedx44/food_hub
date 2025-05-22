@@ -46,7 +46,7 @@ class _CartScreenState extends State<CartScreen> {
                   double totalPrice = cartItems.fold(0.0, (sum, item) {
                     double quantity = double.tryParse(item.quantity) ??
                         1.0; // Default to 1 if parsing fails
-                    return sum + (item.originalprice * quantity);
+                    return sum + (item.originalPrice * quantity);
                   });
 
                   return SingleChildScrollView(

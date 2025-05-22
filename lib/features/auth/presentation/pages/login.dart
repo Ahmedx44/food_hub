@@ -15,9 +15,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // Controllers for email and password fields
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _obscurePassword = true;
 
   @override
   void dispose() {
@@ -29,95 +29,128 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: SafeArea(
         child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const SizedBox(height: 100),
+              // Header
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                  ),
                   Text(
-                    'Log In',
+                    'Welcome Back',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  const Text(
-                    'To Your Account',
+                  const SizedBox(height: 8),
+                  Text(
+                    'Log in to continue your food journey',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      fontSize: 16,
+                      color: Colors.grey.shade600,
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              ),
+              const SizedBox(height: 48),
 
-              // Email Input
+              // Email Field
+              Text(
+                'Email',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey.shade700,
+                ),
+              ),
+              const SizedBox(height: 8),
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  suffixIcon: Icon(
-                    Icons.email,
-                    color: Theme.of(context).colorScheme.primary,
+                  hintText: 'Enter your email',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey.shade50,
+                  prefixIcon:
+                      Icon(Icons.email_outlined, color: Colors.grey.shade500),
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 20),
 
-              // Password Input
+              // Password Field
+              Text(
+                'Password',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey.shade700,
+                ),
+              ),
+              const SizedBox(height: 8),
               TextFormField(
                 controller: _passwordController,
-                obscureText: true,
+                obscureText: _obscurePassword,
                 decoration: InputDecoration(
-                  labelText: 'Password',
-                  border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  suffixIcon: Icon(
-                    Icons.lock,
-                    color: Theme.of(context).colorScheme.primary,
+                  hintText: 'Enter your password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey.shade50,
+                  prefixIcon:
+                      Icon(Icons.lock_outline, color: Colors.grey.shade500),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Colors.grey.shade500,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscurePassword = !_obscurePassword;
+                      });
+                    },
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.01,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.go('/forgetpassword');
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
-                      ),
+              const SizedBox(height: 8),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () => context.go('/forgetpassword'),
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ],
+                ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.01,
-              ),
+              const SizedBox(height: 24),
 
-              Center(
+              // Login Button
+              SizedBox(
+                width: double.infinity,
+                height: 52,
                 child: ElevatedButton(
                   onPressed: () async {
                     showDialog(
@@ -163,111 +196,144 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16.0,
-                      horizontal: 80.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
+                    elevation: 0,
                   ),
                   child: Text(
-                    'Login',
+                    'Log In',
                     style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).colorScheme.onPrimary),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
                   ),
                 ),
               ),
+              const SizedBox(height: 32),
 
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-
-              const Center(
-                child: Text(
-                  'Or Login With',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
-
+              // Divider with "OR" text
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
+                  Expanded(
+                    child: Divider(color: Colors.grey.shade300, thickness: 1),
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      showDialog(
-                        context: context,
-                        builder: (context) =>
-                            const Center(child: CircularProgressIndicator()),
-                      );
-                      final result = await sl<SigninWithGoogle>().call();
-                      result.fold((ifLeft) {
-                        Navigator.pop(context);
-                        showToast(
-                          ifLeft,
-                          backgroundColor: Colors.red,
-                          context: context,
-                          animation: StyledToastAnimation.slideToTop,
-                          reverseAnimation: StyledToastAnimation.fade,
-                          position: StyledToastPosition.top,
-                          animDuration: const Duration(seconds: 1),
-                          duration: const Duration(seconds: 4),
-                          curve: Curves.elasticOut,
-                          reverseCurve: Curves.linear,
-                        );
-                      }, (ifRight) {
-                        Navigator.pop(context);
-                        context.go('/home');
-                        showToast(
-                          ifRight,
-                          backgroundColor: Colors.green,
-                          context: context,
-                          animation: StyledToastAnimation.slideToTop,
-                          reverseAnimation: StyledToastAnimation.fade,
-                          position: StyledToastPosition.top,
-                          animDuration: const Duration(seconds: 1),
-                          duration: const Duration(seconds: 4),
-                          curve: Curves.elasticOut,
-                          reverseCurve: Curves.linear,
-                        );
-                      });
-                    },
-                    child: Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).colorScheme.secondary),
-                        child: Image.asset(height: 50, AppImage.google)),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      'OR',
+                      style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      color: Colors.grey.shade300,
+                      thickness: 1,
+                    ),
                   ),
                 ],
               ),
+              const SizedBox(height: 24),
+
+              // Social Login
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
-              ),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    context.go('/signup');
+                width: double.infinity,
+                height: 52,
+                child: OutlinedButton(
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) =>
+                          const Center(child: CircularProgressIndicator()),
+                    );
+                    final result = await sl<SigninWithGoogle>().call();
+                    result.fold((ifLeft) {
+                      Navigator.pop(context);
+                      showToast(
+                        ifLeft,
+                        backgroundColor: Colors.red,
+                        context: context,
+                        animation: StyledToastAnimation.slideToTop,
+                        reverseAnimation: StyledToastAnimation.fade,
+                        position: StyledToastPosition.top,
+                        animDuration: const Duration(seconds: 1),
+                        duration: const Duration(seconds: 4),
+                        curve: Curves.elasticOut,
+                        reverseCurve: Curves.linear,
+                      );
+                    }, (ifRight) {
+                      Navigator.pop(context);
+                      context.go('/home');
+                      showToast(
+                        ifRight,
+                        backgroundColor: Colors.green,
+                        context: context,
+                        animation: StyledToastAnimation.slideToTop,
+                        reverseAnimation: StyledToastAnimation.fade,
+                        position: StyledToastPosition.top,
+                        animDuration: const Duration(seconds: 1),
+                        duration: const Duration(seconds: 4),
+                        curve: Curves.elasticOut,
+                        reverseCurve: Curves.linear,
+                      );
+                    });
                   },
-                  child: RichText(
-                      text: TextSpan(
-                          text: 'Dont have an Account?',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary),
-                          children: [
-                        TextSpan(
-                          text: 'Signup',
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.bold),
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    side: BorderSide(
+                      color: Colors.grey.shade300,
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(height: 24, AppImage.google),
+                      const SizedBox(width: 12),
+                      Text(
+                        'Continue with Google',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey.shade800,
                         ),
-                      ])),
+                      ),
+                    ],
+                  ),
                 ),
-              )
+              ),
+              const SizedBox(height: 32),
+
+              // Sign up prompt
+              Center(
+                child: TextButton(
+                  onPressed: () => context.go('/signup'),
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Don't have an account? ",
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Sign up',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
